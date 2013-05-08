@@ -1,3 +1,5 @@
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Color;
 import java.util.*;
 
@@ -7,6 +9,37 @@ import org.math.plot.Plot2DPanel;
 
 
 public class Main {
+	
+	static double[] mean(List<DataPoint> dataPoints) {
+		double[] result = new double[dataPoints.get(0).getValues().length];
+		for (DataPoint dataPoint : dataPoints) {
+			double[] values = dataPoint.getValues();
+			for (int i = 0; i < values.length; i++) {
+				result[i] += values[i];
+			}
+		}
+		for (int i = 0; i < result.length; i++) {
+			result[i] /= dataPoints.size();
+		}
+		return result;
+	}
+	
+	static double[] stdDev(List<DataPoint> dataPoints) {
+		double[] result = new double[dataPoints.get(0).getValues().length];
+		
+		double[] mean = mean(dataPoints);
+		for (DataPoint dataPoint : dataPoints) {
+			double[] values = dataPoint.getValues();
+			for (int i = 0; i < values.length; i++) {
+				double d = mean[i] - values[i];
+				result[i] += d*d;
+			}
+		}
+		for (int i = 0; i < result.length; i++) {
+			result[i] = Math.sqrt(result[i]);
+		}
+		return result;
+	}
 
 	/**
 	 * @param args
