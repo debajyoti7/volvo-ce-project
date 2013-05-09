@@ -125,9 +125,9 @@ public class NaiveBayesClassifier {
 		DoublePoint lookup = new DoublePoint(new double[]{RANDOM.nextDouble(), RANDOM.nextDouble()});
 		plot(plot, "Lookup", Color.PINK, Collections.singleton(lookup));
 		
-		for (int i = 0; i < lookup.getPoint().length; i++) {
-			double[] probability = classifier.conditionalProbability(lookup, i);
-			System.out.println("probability for index: " + i + ": " + Arrays.toString(probability)); 
+		double[] probability = classifier.conditionalClassProbability(lookup);
+		for (int i = 0; i < lookup.getPoint().length; i++) {			
+			System.out.println("probability for cluster: " + i + ": " + probability[i]); 
 		}
 		
 		// put the PlotPanel in a JFrame, as a JPanel

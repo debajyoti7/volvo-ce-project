@@ -1,5 +1,4 @@
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.math3.ml.clustering.DoublePoint;
@@ -7,10 +6,7 @@ import org.apache.commons.math3.ml.distance.DistanceMeasure;
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
 
 import mtree.*;
-import mtree.DistanceFunctions.EuclideanCoordinate;
-import mtree.tests.Data;
 import mtree.utils.Pair;
-import mtree.utils.Utils;
 
 public class VolvoMTree {
 	
