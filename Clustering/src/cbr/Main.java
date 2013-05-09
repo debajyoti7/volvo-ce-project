@@ -59,7 +59,7 @@ public class Main {
 		
 		for (NaiveBayesCluster naiveBayesCluster : naiveBayes) {
 			for (int i = 0; i < lookup.getPoint().length; i++) {
-				double probability = naiveBayesCluster.normalizedValue(lookup, i);
+				double probability = naiveBayesCluster.conditionalFeatureProbability(lookup, i);
 				System.out.println("Cluster" + naiveBayesCluster.ordinal() + ", index: " + i + ", probability: " + probability); 
 			}
 		}

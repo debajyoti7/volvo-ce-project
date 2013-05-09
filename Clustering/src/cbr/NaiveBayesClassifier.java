@@ -19,7 +19,7 @@ public class NaiveBayesClassifier {
 		this.noise = new HashSet<>(dataPoints);
 				
 		for (Cluster<DoublePoint> cluster : clusterer.cluster(dataPoints)) {						
-			clusters.add(new NaiveBayesCluster(cluster, dataPoints.size()));
+			clusters.add(new NaiveBayesCluster(cluster));
 		}
 		
 		for (Cluster<DoublePoint> c : clusters) {
@@ -41,20 +41,48 @@ public class NaiveBayesClassifier {
 	public Set<DoublePoint> noise() {
 		return noise;
 	}
-	
+	/*
 	public double[] conditionalProbability(DoublePoint dataPoint, int index) {
 		double[] result = new double[clusters.size()];
 		double sumOfNormalizedValues = 0.0;
 		
 		for (int i = 0; i < clusters.size(); i++) {
-			result[i] = clusters.get(i).normalizedValue(dataPoint, index);
+			NaiveBayesCluster cluster = clusters.get(i); 
+			result[i] = cluster.conditionalFeatureProbability(dataPoint, index);
 			sumOfNormalizedValues += result[i];
 			
-			result[i] *= clusters.get(i).probability();			
+			double clusterProbability = (double)cluster.getPoints().size() / ( dataPoints.size() - noise.size() );
+			
+			result[i] *= clusterProbability;
 		}
 		for (int i = 0; i < result.length; i++) {
 			result[i] /= sumOfNormalizedValues;
 		}
+		return result;
+	}
+	*/
+	public double caseProbability(DoublePoint dataPoint) {
+		double result = 0.0;
+		for (NaiveBayesCluster cluster : clusters) {
+			int totalClusteredDataPoints = dataPoints.size() - noise.size();
+			result += cluster.conditionalProbability(dataPoint, totalClusteredDataPoints);
+		}
+		return result;
+	}
+	
+	public double[] conditionalClassProbability(DoublePoint dataPoint) {
+		double[] result = new double[clusters().size()];
+		
+		double sum = 0.0;
+		for (int i = 0; i < clusters.size(); i++) {
+			
+			int totalClusteredDataPoints = dataPoints.size() - noise.size();
+			result[i] = clusters.get(i).conditionalProbability(dataPoint, totalClusteredDataPoints);
+			sum += result[i];
+		}
+		for (int i = 0; i < clusters.size(); i++)
+			result[i] /= sum;
+		
 		return result;
 	}
 	
