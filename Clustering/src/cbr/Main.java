@@ -34,7 +34,7 @@ public class Main {
 			
 			for (Cluster<DoublePoint> cluster : dbScan.cluster(dataPoints)) {
 				
-				NaiveBayesCluster nb = new NaiveBayesCluster(cluster, dataPoints.size());			
+				NaiveBayesCluster nb = new NaiveBayesCluster(cluster);			
 				naiveBayes.add(nb);
 				 
 				writer.write(nb.name() + "," + Arrays.toString(nb.mean()) + "\n");			
@@ -57,12 +57,12 @@ public class Main {
 		DoublePoint lookup = new DoublePoint(new double[]{RANDOM.nextDouble(), RANDOM.nextDouble()});
 		plot(plot, "Lookup", Color.PINK, Collections.singleton(lookup));
 		
-		for (NaiveBayesCluster naiveBayesCluster : naiveBayes) {
-			for (int i = 0; i < lookup.getPoint().length; i++) {
-				double probability = naiveBayesCluster.normalizedValue(lookup, i);
-				System.out.println("Cluster" + naiveBayesCluster.ordinal() + ", index: " + i + ", probability: " + probability); 
-			}
-		}
+//		for (NaiveBayesCluster naiveBayesCluster : naiveBayes) {
+//			for (int i = 0; i < lookup.getPoint().length; i++) {
+//				double probability = naiveBayesCluster.conditionalFeatureProbability(lookup, i);
+//				System.out.println("Cluster" + naiveBayesCluster.ordinal() + ", index: " + i + ", probability: " + probability); 
+//			}
+//		}
 		
 		// put the PlotPanel in a JFrame, as a JPanel
 		JFrame frame = new JFrame("AI");
