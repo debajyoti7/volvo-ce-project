@@ -1,9 +1,8 @@
 package core;
 
-
-
+import java.io.BufferedWriter;
 import java.io.File;
-
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,33 +43,9 @@ public class ProjectManager {
 	
 	public int deleteProject(String pName) {
 		CBRProject p;
-		
-		
-		
-		
-		
 		for(int i = 0; i < this.projects.size(); i++) {
 			p = this.projects.get(i);
-			
-			
-			
-			
-			if(p.getName().equals(pName)) {
-				
-				
-				/*try{
-					// Create file 
-					FileWriter fstream = new FileWriter(System.getProperty("user.home")+File.separator+"debug.txt");
-					BufferedWriter out = new BufferedWriter(fstream);
-					out.write("match");
-					//Close the output stream
-					out.close();
-				}catch (Exception ex){//Catch exception if any
-					System.err.println("Error: " + ex.getMessage());
-				}*/
-				
-				
-				
+			if(p.getName().equals(pName)) {	
 				try {
 					new File(this.workspace+File.separator+p.getName()+".acbr").delete();
 					this.projects.remove(i);
@@ -85,10 +60,14 @@ public class ProjectManager {
 		return 0;
 	}
 	
-	public int updateProject(String projectName) {
-		
-		//writeProject2Disk(CBRProject p)
-		/* TODO */
+	public int updateProject(String projectName, CBRProject p) {
+		try {
+			new File(this.workspace+File.separator+projectName+".acbr").delete();
+			writeProject2Disk(p);
+		}
+		catch(Exception e) {
+			return -1;
+		}
 		
 		return 0;
 	}
@@ -123,7 +102,6 @@ public class ProjectManager {
 		
 		for(int i = 0; i < files.length; i++) {
 			try {				
-				
 				p = mapper.readValue(files[i], CBRProject.class);
 				this.projects.add(p);
 			}

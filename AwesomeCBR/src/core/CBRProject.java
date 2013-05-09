@@ -1,5 +1,6 @@
 package core;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CBRProject {
@@ -13,14 +14,26 @@ public class CBRProject {
 	private DBConnector dbc;
 	
 	// Constructors.
-	public CBRProject() {}
+	public CBRProject() {
+		attributes = new ArrayList<Attribute>();
+		//this is it!!
+	}
 	
 	public CBRProject(String _name) {
+		this();
 		this.name = _name;
 	}
 	
 	// Actions.
+	public void setName(String _name) {
+		this.name = _name;
+	}
+	
 	public String getName() {
 		return this.name;
+	}
+	
+	public void addAttribute(Attribute a) {
+		attributes.add(a);
 	}
 }
