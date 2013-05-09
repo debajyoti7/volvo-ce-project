@@ -9,24 +9,30 @@ import javax.swing.JSplitPane;
 import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.ScrollPane;
 
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import core.AmosDemo;
 import core.Attribute;
 import core.CBRProject;
 import core.ProjectManager;
 
+import javax.swing.BorderFactory;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import java.awt.Dimension;
 import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionListener;
@@ -48,7 +54,7 @@ public class JFrame_main extends JFrame {
 	private JTabbedPane tabbedPane;
 	private JSplitPane splitPane;
 	private JScrollPane scrollPane;
-	private JScrollPane scrollPane_1;
+	//private JScrollPane scrollPane_1;
 	
 	private JPanel contentPane;
 	private JPanel pTop;
@@ -65,6 +71,7 @@ public class JFrame_main extends JFrame {
 	private JTextArea textArea1;
 	
 	JTextField textField2;
+	JTextArea status_textarea;
 	
 	private List<Attribute> attributes = new ArrayList<Attribute>();
 	
@@ -200,6 +207,7 @@ public class JFrame_main extends JFrame {
 		scrollPane.setPreferredSize(new Dimension(150, 32767));
 		
 		list_projects = new JList<String>();
+		list_projects.setFont(s.font_normal);
 		//list_projects.setPreferredSize(new Dimension(100, 0));
 		//list_projects.setMinimumSize(new Dimension(100, 0));
 		//list_projects.setMaximumSize(new Dimension(100, 0));
@@ -218,7 +226,8 @@ public class JFrame_main extends JFrame {
 		splitPane.setLeftComponent(scrollPane);
 		
 		// Right side of Splitpane.
-		scrollPane_1 = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		//skata.setBorder(new EmptyBorder(5, 5, 5, 5));
+		//scrollPane_1 = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(Color.WHITE);
@@ -288,13 +297,15 @@ public class JFrame_main extends JFrame {
 		
 		tab1.add(JPanel_1_2);
 
-		tabbedPane.addTab("Settings", null, tab1, "Settings");
+		//tabbedPane.addTab("Settings", null, tab1, "Settings");
 		//tabbedPane.setFont(s.font_normal);
 		
 		tab2 = new JPanel();
 		tab2.setBackground(Color.WHITE);
 		tab2.setLayout(new BoxLayout(tab2, BoxLayout.Y_AXIS));
+		
 		tabbedPane.addTab("Dataset", null, tab2, "Dataset");
+		tabbedPane.addTab("Settings", null, tab1, "Settings");
 		
 		JPanel panel21 = new JPanel();
 		panel21.setLayout(new BoxLayout(panel21, BoxLayout.X_AXIS));
@@ -325,9 +336,8 @@ public class JFrame_main extends JFrame {
 		JButton queryButton = new JButton();
 		queryButton.setText("Query");
 		queryButton.addActionListener(new ActionListener() {
-			// Remove Project button
 			public void actionPerformed(ActionEvent arg0) {
-				if(!textField2.getText().equals("")) {
+				/*if(!textField2.getText().equals("")) {
 					String[] attr_tokens = textField2.getText().split(",");
 					attributes.clear();
 					for(int i = 0; i < attr_tokens.length; i++) {
@@ -339,8 +349,14 @@ public class JFrame_main extends JFrame {
 				}
 				else {
 					JOptionPane.showMessageDialog(JFrame_main.this, "I am afraid there are no attributes specified...");
-				}
+				}*/
 				
+				try {
+					new AmosDemo(JFrame_main.this.status_textarea);
+				}
+				catch(Exception e) {
+					
+				}
 			}
 		});
 		//queryButton.setMinimumSize(new Dimension(100, 100));
@@ -357,10 +373,43 @@ public class JFrame_main extends JFrame {
 		tab3.setLayout(new BoxLayout(tab3, BoxLayout.Y_AXIS));
 		tabbedPane.addTab("Dataset", null, tab3, "Dataset");*/
 		
-		scrollPane_1.setViewportView(tabbedPane);
-		splitPane.setRightComponent(scrollPane_1);
+		//splitPane.setRightComponent(scrollPane_1);
+		splitPane.setRightComponent(tabbedPane);
 		pBottom.add(splitPane);
 		contentPane.add(pBottom);
+		
+		JPanel status_panel = new JPanel();
+		status_panel.setLayout(new BoxLayout(status_panel, BoxLayout.Y_AXIS));
+		status_panel.setBorder(new EmptyBorder(5,5,5,5));
+		status_panel.setMinimumSize(new Dimension(32767, 250));
+		status_panel.setMaximumSize(new Dimension(32767, 250));
+		status_panel.setPreferredSize(new Dimension(32767, 250));
+		
+		JScrollPane sp = new JScrollPane();
+		sp.setMinimumSize(new Dimension(1, 1));
+		sp.setMaximumSize(new Dimension(32767, 32767));
+		sp.setPreferredSize(new Dimension(32767, 32767));
+		
+		status_textarea = new JTextArea();
+		status_textarea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		//status.setBackground(Color.BLACK);
+		status_textarea.setForeground(Color.GRAY);
+		status_textarea.setEditable(false);
+		status_textarea.setText("");
+		status_textarea.setFont(s.font_normal);
+		
+		sp.setViewportView(status_textarea);
+		
+		JPanel status_panel_label = new JPanel();
+		status_panel_label.setLayout(new FlowLayout());
+		
+		JLabel slabel = new JLabel(":: Output ::");
+		slabel.setFont(s.font_normal);
+		status_panel_label.add(slabel);
+		status_panel.add(status_panel_label);
+		status_panel.add(sp);
+		
+		contentPane.add(status_panel);
 				
 		// After
 		pm = new ProjectManager();
