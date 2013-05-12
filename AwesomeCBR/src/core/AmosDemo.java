@@ -32,21 +32,19 @@ public class AmosDemo {
 		Tuple res1;	    // To hold result lists of updated AMOS functions
 		int idno;	    // To hold identity number of AMOS OID
 
-//		String[] argv = new String[] { "C:/amos2/bin/amos2.dmp" };
-//		
-//		System.out.println(argv[0]);
-//		
-//		if (argv.length != 1) {
-//			System.err.println("Usage: java AmosDemo <path to amos2.dmp>");
-//			System.exit(1);
-//		}
+		String[] argv = new String[] { "amos2/bin/amos2.dmp" };
+
+		if (argv.length != 1) {
+			System.err.println("Usage: java AmosDemo <path to amos2.dmp>");
+			System.exit(1);
+		}
 
 		// Create the connection
-		Connection.initializeAmos("C:/amos2/bin/amos2.dmp");
+		Connection.initializeAmos(argv[0]);
 		theConnection = new Connection("");
 
 		// Executing illegal AMOSQL from C with error trapping
-		try {
+		/*try {
 			theConnection.execute("create type usertypeobject;");
 		}
 		catch (AmosException e) {
@@ -54,7 +52,7 @@ public class AmosDemo {
 			System.out.print("(1) theConnection.printerrform(): ");
 			theConnection.printErrForm();
 			System.out.flush();
-		}
+		}*/
 
 		// Execute query and scan the result
 		// theScan is 'scan' holding the result of the query
@@ -75,12 +73,12 @@ public class AmosDemo {
 
 			row = theScan.getRow();    // Get current row in the scan
 			str = row.getStringElem(0);   // Get 1st arg in row as a string
-			System.out.println("(2) Type " + str);
+			System.out.println("Type " + str);
 			theScan.nextRow();	    // Advance the scan forward
 		}
 
 		System.out.println("End of simple call test");
-		// Calling Amos functions using the fast-path interface
+		/*// Calling Amos functions using the fast-path interface
 		// Get a handle to the function to call
 		f1 = null;
 		try
@@ -310,7 +308,7 @@ public class AmosDemo {
 		System.out.println("(24) The AMOS2 type-hierarchy:");
 		theScan = theConnection.execute("get_type_structure(typenamed(\"OBJECT\"));");
 		Vector vv = (Vector)theScan.toVector().firstElement();
-		AmosDemo.dfs((Vector)vv.elementAt(1), 0);
+		AmosDemo.dfs((Vector)vv.elementAt(1), 0);*/
 	}
 
 	public static void dfs(java.util.Vector v, int depth) throws AmosException {

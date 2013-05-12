@@ -6,6 +6,10 @@ import javax.swing.UIManager;
 
 public class AwesomeCBR {
 	// Properties.
+	static {
+		System.loadLibrary("amos2"); // This one has to be loaded first.
+		System.loadLibrary("javaamos");
+	}
 	
 	// Constructors.
 	

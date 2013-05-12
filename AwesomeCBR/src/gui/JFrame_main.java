@@ -100,25 +100,7 @@ public class JFrame_main extends JFrame {
 		JMenuItem f2 = new JMenuItem("Import...");
 		f2.setMnemonic('I');
 		file.add(f2);
-		
-		
-		/*
-		openItem.setMnemonic('O');
-		file.add(openItem);	
-		JMenuItem exitItem = new JMenuItem("Exit");
-		exitItem.setMnemonic('x');
-		file.add(exitItem);*/
-		
-		//adding action listener to menu items
-		/*f1.addActionListener(
-			new ActionListener(){
-				public void actionPerformed(ActionEvent e)
-				{
-					System.out.println("New is pressed");
-				}
-			}
-		);*/
-		
+			
 		JMenu tools = new JMenu("Tools");
 		tools.setMnemonic('T');
 		JMenuItem t1 = new JMenuItem("Server Manager...");
@@ -150,11 +132,6 @@ public class JFrame_main extends JFrame {
 		bar.add(file);
 		bar.add(tools);
 		setJMenuBar(bar);
-		
-		
-		
-		
-		
 		
 		
 		// Top panel and P+, P- buttons.
@@ -326,12 +303,14 @@ public class JFrame_main extends JFrame {
 		textField2.setPreferredSize(new Dimension(1, s.JTextField_height));
 		textField2.setText("attribute1,attribute2,attribute3,attribute4,attribute5");
 		panel21.add(textField2);
+		panel21.setBackground(Color.WHITE);
 		tab2.add(panel21);
 		
 		
 		JPanel pq = new JPanel();
 		pq.setLayout(new BoxLayout(pq, BoxLayout.X_AXIS));
 		pq.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pq.setBackground(Color.WHITE);
 		
 		JButton queryButton = new JButton();
 		queryButton.setText("Query");
@@ -359,14 +338,20 @@ public class JFrame_main extends JFrame {
 				}
 			}
 		});
-		//queryButton.setMinimumSize(new Dimension(100, 100));
-		//queryButton.setMaximumSize(new Dimension(100, 100));
-		//queryButton.setPreferredSize(new Dimension(100, 100));
+
+		
+		JButton queryButton2 = new JButton();
+		queryButton2.setText("Query 2");
+		queryButton2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		pq.add(queryButton);
+		pq.add(queryButton2);
 		
 		tab2.add(pq);
-		//tab2.add(new JPanel());
+		tab2.add(new JPanel());
 		
 		/*tab3 = new JPanel();
 		tab3.setBackground(Color.WHITE);
