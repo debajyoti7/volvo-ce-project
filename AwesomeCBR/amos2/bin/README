@@ -1,0 +1,90 @@
+This directory contains binary files and command procedures for Amos
+II users.  
+ 
+Running the AMOS II system:
+--------------------------
+
+Run (or click on) the executable:
+
+  amos2
+
+Running the AMOS II tutorial:
+-----------------------------
+
+To learn a little how to use Amos II, run the executable:
+
+  < '../demo/tutorial.amosql';
+
+There is a manual in:
+
+../doc/amos_users_guide.html
+
+Interface to Java language and GOOVI browser:
+---------------------------------------------
+
+A. You first need to download the 32 bits (!!) Java virtual machine from
+
+   http://www.oracle.com/technetwork/java/index.html
+
+B. Then set environment variables:
+
+   1) Set PATH to include this directory.
+   2) Set CLASSPATH to include javaamos.jar in this directory.
+
+C. Run Amos from the Java virtual machine by calling the
+   command procedure:
+
+           javaamos <database image file> 
+
+   javaamos.bat requires as first parameter the exact path to a
+   database image file (default is 'amos2.dmp').
+ 
+   You will then enter the Amos II top loop as with amos2.exe, but
+   inside the Java virtual machine. 
+
+   The multi-database browser Goovi can then be started with the 
+   following function call:
+
+           goovi(); 
+
+Files:
+------
+
+amos2.exe The Amos II executable. Requires amos2.dmp and msvcrtd.dll.
+
+amos2.dmp The Amos II initial database image (default). You may
+          specify alternative database image as parameter
+          to amos2.exe or javaamos.bat.
+
+javaamos.bat 
+          Command procedure to run Amos II from Java virtual
+          machine. Works with any JVM version.
+
+amos2.lib Amos II object library for MicroSoft Visual C++ applications
+
+msvcrtd.dll MicroSoft Visual C++ library
+
+javaamos.dll
+          Dynamic Link Library required to run JavaAMOS which includes
+          a Java Native Interface (JNI) between Amos II and Java. 
+
+javaamos.jar
+          Java library file implementing Java part of interface
+          between Amos II and Java through JNI. Must be in
+          CLASSPATH.
+
+php_amos.dll
+          Dynamic Link Library required to call Amos II from PHP. 
+          See ..\embeddings\PHP\readme.txt
+            
+bt.dll    Implementation of main memory B-tree indexes
+
+xt.dll    Implementation of main memory X-tree indexes
+
+
+	    
+
+
+
+
+
