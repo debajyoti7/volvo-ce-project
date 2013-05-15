@@ -16,7 +16,7 @@ public class NaiveBayesCluster extends Cluster<DoublePoint> {
 	private final double[] mean;
 	private final double[] variance;
 	
-	private final double probability;
+//	private final double probability;
 	
 	public double[] mean() { 
 		return mean; 
@@ -34,9 +34,9 @@ public class NaiveBayesCluster extends Cluster<DoublePoint> {
 		return ordinal;
 	}
 	
-	public NaiveBayesCluster(Cluster<DoublePoint> cluster, int totalNumberOfDataPoints) {
+	public NaiveBayesCluster(Cluster<DoublePoint> cluster) {
 		ordinal = counter++;
-		probability = (double)cluster.getPoints().size() / totalNumberOfDataPoints;
+		//probability = (double)cluster.getPoints().size() / totalNumberOfDataPoints;
 		
 		// Add all data points from the given cluster to this cluster
 		getPoints().addAll(cluster.getPoints());
@@ -74,16 +74,28 @@ public class NaiveBayesCluster extends Cluster<DoublePoint> {
 		}
 	}
 	
-	double probability() {
-		return probability;
-	}
+//	double probability() {
+//		return probability;
+//	}
 	
-	// TODO change name
-	double normalizedValue(DoublePoint dp, int index) {
+	private double conditionalFeatureProbability(DoublePoint dp, int index) {
 		double denominator = Math.sqrt(2 * Math.PI) * Math.sqrt( variance[index] );
 		
 		double d = dp.getPoint()[index] - mean[index];
 		
 		return ( 1 / denominator ) * Math.pow( Math.E, -( (d * d) / (2 * variance[index]) ) ); 
+	}
+	
+	// TODO use sum of log instead of multiplication 
+	double conditionalProbability(DoublePoint dp, int totalClusteredDataPoints) {
+		
+		// calculate the product of all conditional probabilities for every feature
+		double result = conditionalFeatureProbability(dp, 0);
+		for (int i = 1; i < dp.getPoint().length; i++) {
+			result *= conditionalFeatureProbability(dp, i); 
+		}
+		
+		// multiply by the cluster probability (omitting the not classified noise data points)
+		return result * ( (double)getPoints().size() / totalClusteredDataPoints );
 	}
 }
