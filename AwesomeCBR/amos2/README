@@ -1,0 +1,10 @@
+Subdirectories:
+
+bin    Amos II executables
+doc    Documentation and tutorial
+demo   AmosQL scripts to be used with tutorial
+       Examples of Visual C++ Studio projects interfacing Amos II
+java   Some examples of interfacing Java with Amos II
+C      Interfacing Amos II with C
+embeddings
+       Interfaces to Amos II from other systems

@@ -2,10 +2,14 @@
 <classpath>
 	<classpathentry excluding="Cluster.java|DataPoint.java|DBSCAN.java|Main.java|DoubleData.java" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+<<<<<<< HEAD
+	<classpathentry kind="lib" path="jmathplot.jar"/>
+=======
 	<classpathentry kind="lib" path="C:/Users/Tobias/Dropbox/Private/AI/Java/Clustering/jmathplot.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="C:/volvo/volvo-ce-project/Clustering/commons-math3-3.2.jar" sourcepath="C:/volvo/volvo-ce-project/Clustering/commons-math3-3.2-sources.jar"/>
 	<classpathentry kind="lib" path="C:/volvo/volvo-ce-project/Clustering/commons-math3-3.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="C:/volvo/volvo-ce-project/Clustering/commons-math3-3.2-sources.jar"/>
+>>>>>>> upstream1/master
 	<classpathentry kind="output" path="bin"/>
 </classpath>
