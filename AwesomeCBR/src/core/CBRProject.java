@@ -4,27 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CBRProject {
-	// Properties
-	private int project_id;
 	private String name;
-	private String url;
-	private List<Attribute> attributes;
-	private String comments;
-	private Dataset dataset;
-	private DBConnector dbc;
+	private String dataset;
+	private List<CBRAttribute> attributes;
 	
-	// Constructors.
-	public CBRProject() {
-		attributes = new ArrayList<Attribute>();
-		//this is it!!
-	}
+	public CBRProject() {}
 	
-	public CBRProject(String _name) {
-		this();
+	public CBRProject(String _name, String _dataset_url) {
 		this.name = _name;
+		this.dataset = _dataset_url;
 	}
-	
-	// Actions.
+
 	public void setName(String _name) {
 		this.name = _name;
 	}
@@ -33,7 +23,23 @@ public class CBRProject {
 		return this.name;
 	}
 	
-	public void addAttribute(Attribute a) {
+	public void setDataset(String _dataset) {
+		this.dataset = _dataset;
+	}
+	
+	public String getDataset() {
+		return this.dataset;
+	}
+	
+	public void addAttribute(CBRAttribute a) {
 		attributes.add(a);
+	}
+	
+	public List<CBRAttribute> getAttributes() {
+		return attributes;
+	}
+	
+	public void setAttributes(ArrayList<CBRAttribute> arrayList) {
+		attributes = arrayList;
 	}
 }

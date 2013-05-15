@@ -1,19 +1,15 @@
 package core;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
 public class ProjectManager {
-	// Properties.
 	private List<CBRProject> projects;
 	private String workspace;
 	
-	// Constructors.
 	public ProjectManager() {
 		this.projects = new ArrayList<CBRProject>();
 		
@@ -23,6 +19,7 @@ public class ProjectManager {
 			f.mkdir();
 		}
 		else if(!f.isDirectory()) {
+			// TODO.
 			// ERROR. System workspace is a file instead of folder.
 		}
 	}
@@ -31,11 +28,9 @@ public class ProjectManager {
 		this.projects = _projects;
 	}
 	
-	// Actions.
-	public int createProject(String name) {
-		CBRProject p = new CBRProject(name);
-		this.projects.add(p);
-		
+	public int createProject(String name, String dataset_url) {
+		CBRProject p = new CBRProject(name, dataset_url);
+		this.projects.add(p);	
 		writeProject2Disk(p);
 		
 		return 0;

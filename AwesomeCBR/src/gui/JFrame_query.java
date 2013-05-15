@@ -1,38 +1,28 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
-import core.Attribute;
+import core.CBRAttribute;
 
 public class JFrame_query extends JFrame {
 	// Properties.
 	private static final long serialVersionUID = 8446333323136510070L;
-	private Settings s = new Settings();
 	private JPanel_LTControl[] fields;
 	
 	// Constructors.
-	public JFrame_query() {
-		
-	}
+	public JFrame_query() {}
 	
 	// Actions.
-	public void setVisible(JFrame parent, List<Attribute> attributes, Boolean b) {
+	public void setVisible(JFrame parent, List<CBRAttribute> attributes, Boolean b) {
 		JPanel contentPane = new JPanel();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		setContentPane(contentPane);
@@ -52,8 +42,8 @@ public class JFrame_query extends JFrame {
 		bp.setBorder(new EmptyBorder(5,5,5,5));
 		
 		JPanel spacer = new JPanel();
-		spacer.setMinimumSize(new Dimension(1, s.JTextField_height));
-		spacer.setMaximumSize(new Dimension(32767, s.JTextField_height));
+		spacer.setMinimumSize(new Dimension(1, Settings.JTextField_height));
+		spacer.setMaximumSize(new Dimension(32767, Settings.JTextField_height));
 		bp.add(spacer);
 		
 		JButton submit_button = new JButton("Submit");
