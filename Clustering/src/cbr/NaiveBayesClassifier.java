@@ -11,7 +11,7 @@ import org.math.plot.Plot2DPanel;
 public class NaiveBayesClassifier {
 
 	private final Set<DoublePoint> dataPoints;
-	private final Set<DoublePoint> noise;
+	private Set<DoublePoint> noise;
 	private final List<NaiveBayesCluster> clusters = new ArrayList<>();
 	
 	public NaiveBayesClassifier(Clusterer<DoublePoint> clusterer, Collection<DoublePoint> dataPoints) {
@@ -25,6 +25,7 @@ public class NaiveBayesClassifier {
 		for (Cluster<DoublePoint> c : clusters) {
 			noise.removeAll(c.getPoints());
 		}
+		noise = Collections.unmodifiableSet(noise);
 	}
 	
 	public List<NaiveBayesCluster> clusters() {
@@ -61,6 +62,7 @@ public class NaiveBayesClassifier {
 		return result;
 	}
 	*/
+	
 	public double caseProbability(DoublePoint dataPoint) {
 		double result = 0.0;
 		for (NaiveBayesCluster cluster : clusters) {
