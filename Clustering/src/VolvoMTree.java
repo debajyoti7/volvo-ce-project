@@ -72,15 +72,14 @@ public class VolvoMTree {
 		};
 		
 		MTree<DoublePoint> tree = new MTree<DoublePoint>(
-				distanceFunction, 
-				new ComposedSplitFunction<DoublePoint>(
-					nonRandomPromotion,
-					new PartitionFunctions.BalancedPartition<DoublePoint>()
-				)
-			);
+			distanceFunction, 
+			new ComposedSplitFunction<DoublePoint>(
+				nonRandomPromotion,
+				new PartitionFunctions.BalancedPartition<DoublePoint>()
+			)
+		);
 		
-		
-		
+		//tree.
 	}
 
 }
