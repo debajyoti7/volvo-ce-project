@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="Cluster.java|DataPoint.java|DBSCAN.java|Main.java" kind="src" path="src"/>
-	<classpathentry kind="src" path="test"/>
+	<classpathentry excluding="Cluster.java|DataPoint.java|DBSCAN.java|Main.java|DoubleData.java" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/Tobias/Dropbox/Private/AI/Java/Clustering/jmathplot.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
