@@ -13,6 +13,7 @@ public class AmosProcessBuilder {
 	}
 
 	public void doStart(String arg0) {
+		output.append("Connected from AMOS\n");
 		builder = new ProcessBuilder("amos2/bin/amos2.exe", arg0);
 		builder.redirectErrorStream(true);
 		forkWorker = new AmosProcessWorker(output,builder);
@@ -20,14 +21,21 @@ public class AmosProcessBuilder {
 	}
 
 	public void doStop() {
-		if (forkWorker != null) {
+		//if (forkWorker != null) {
+		try {
+			output.append("\nDisconnected from AMOS\n");
 			forkWorker.exec_cmd("quit;");
 			forkWorker.cancel(true);
-		}
+		} catch (Exception e) { output.append("\n"+e.getMessage()+"\n"); }
+		//}
 	}
 	
 	public void execute(String cmd) {
-		forkWorker.exec_cmd(cmd);
+		//if(forkWorker != null) {
+		try {
+			forkWorker.exec_cmd(cmd);
+		} catch(Exception e) { output.append("\n"+e.getMessage()+"\n"); }
+		//}
 	}
 }
 

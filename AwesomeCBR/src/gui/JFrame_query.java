@@ -43,7 +43,7 @@ public class JFrame_query extends JFrame {
 		
 		JPanel spacer = new JPanel();
 		spacer.setMinimumSize(new Dimension(1, Settings.JTextField_height));
-		spacer.setMaximumSize(new Dimension(32767, Settings.JTextField_height));
+		spacer.setMaximumSize(new Dimension(Integer.MAX_VALUE, Settings.JTextField_height));
 		bp.add(spacer);
 		
 		JButton submit_button = new JButton("Submit");
