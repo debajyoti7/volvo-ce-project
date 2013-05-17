@@ -8,6 +8,8 @@ import java.awt.Component;
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import core.CBRAttribute;
 import core.CBRProject;
 import core.ProjectManager;
 import javax.swing.JMenu;
@@ -56,7 +58,11 @@ public class JFrame_main extends JFrame {
 				np.setVisible(true);
 				
 				if(np.isValidated()) {
-					pm.createProject(np.getProjectName(), np.getURL());
+					np.getURL();
+					
+					CBRProject p = new CBRProject(np.getProjectName(), np.getURL());
+					
+					//pm.createProject(np.getProjectName(), np.getURL());
 					refreshView(pm.getProjectNames().indexOf(np.getProjectName()));
 				}
 		    }

@@ -36,6 +36,20 @@ public class ProjectManager {
 		return 0;
 	}
 	
+	
+	/***/
+	
+	
+	public void addProject(CBRProject p) {
+		this.projects.add(p);
+		writeProject2Disk(p);
+	}
+	
+	
+	
+	
+	
+	
 	public int deleteProject(String pName) {
 		CBRProject p;
 		for(int i = 0; i < this.projects.size(); i++) {
