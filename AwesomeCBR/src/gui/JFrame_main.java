@@ -90,8 +90,7 @@ public class JFrame_main extends JFrame {
 		f3.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ae) {
 		    	pm.deleteProject(list_projects.getSelectedValue().toString());
-				refreshView(0);
-				
+				refreshView(0);				
 				// TODO clean project_area after last item is deleted
 		    }
 		});
@@ -146,7 +145,7 @@ public class JFrame_main extends JFrame {
 		
 		// Create Panels
 		for(JPanel_Project p : ppanels) {
-			p.destroy();
+			p.amosDisconnect();
 		}
 		ppanels.clear();
 		
