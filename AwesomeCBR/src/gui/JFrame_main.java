@@ -24,7 +24,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class JFrame_main extends JFrame {	
 	private ProjectManager pm;
-	private List<JPanel_Project> ppanels = new ArrayList<JPanel_Project>();
+	private List<JPanel_Project_View> ppanels = new ArrayList<JPanel_Project_View>();
 	private Boolean disable_listeners = false;
 	private JSplitPane splitPaneLR;
 	private JScrollPane scrollPane;
@@ -51,7 +51,7 @@ public class JFrame_main extends JFrame {
 		f1.setMnemonic('N');
 		f1.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ae) {
-		    	JDialog_CRUD_Project np = new JDialog_CRUD_Project(JFrame_main.this, JFrame_main.this.pm.getProjectNames(), "Awsome CBR - Add new project", null);
+		    	JDialog_Project np = new JDialog_Project(JFrame_main.this, JFrame_main.this.pm.getProjectNames(), "Awsome CBR - Add new project", null);
 				np.setLocationRelativeTo(JFrame_main.this);
 				np.setVisible(true);
 				
@@ -70,7 +70,7 @@ public class JFrame_main extends JFrame {
 		    	String old_name = list_projects.getSelectedValue().toString();
 				int old_index = list_projects.getSelectedIndex();
 				CBRProject p = pm.getProjects().get(old_index);
-				JDialog_CRUD_Project np = new JDialog_CRUD_Project(JFrame_main.this, JFrame_main.this.pm.getProjectNames(), "AwesomeCBR - Edit project name", p);
+				JDialog_Project np = new JDialog_Project(JFrame_main.this, JFrame_main.this.pm.getProjectNames(), "AwesomeCBR - Edit project name", p);
 				np.setLocationRelativeTo(JFrame_main.this);
 				np.setVisible(true);
 
@@ -90,8 +90,7 @@ public class JFrame_main extends JFrame {
 		f3.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ae) {
 		    	pm.deleteProject(list_projects.getSelectedValue().toString());
-				refreshView(0);
-				
+				refreshView(0);				
 				// TODO clean project_area after last item is deleted
 		    }
 		});
@@ -145,14 +144,14 @@ public class JFrame_main extends JFrame {
 		list_projects.setListData(JFrame_main.this.pm.getProjectNames().toArray(new String[JFrame_main.this.pm.getProjectNames().size()]));
 		
 		// Create Panels
-		for(JPanel_Project p : ppanels) {
-			p.destroy();
+		for(JPanel_Project_View p : ppanels) {
+			p.amosDisconnect();
 		}
 		ppanels.clear();
 		
 		
 		for(CBRProject p : pm.getProjects()) {
-			JPanel_Project tmp = new JPanel_Project(p, JFrame_main.this);
+			JPanel_Project_View tmp = new JPanel_Project_View(p, JFrame_main.this);
 			ppanels.add(tmp);
 			projects_area.add(tmp);
 		}
