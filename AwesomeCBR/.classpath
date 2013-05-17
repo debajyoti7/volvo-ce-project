@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src">
+	<classpathentry excluding="mtree/tests/MTreeTest.java" kind="src" path="src">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/volvo/volvo-ce-project/AwesomeCBR/amos2/bin"/>
 		</attributes>
@@ -11,5 +11,9 @@
 	<classpathentry kind="lib" path="jackson-core-asl-1.9.12.jar"/>
 	<classpathentry kind="lib" path="jackson-mapper-asl-1.9.12.jar"/>
 	<classpathentry kind="lib" path="amos2/bin/javaamos.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KKND/workspace/volvo-ce-project/AwesomeCBR/commons-math3-3.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KKND/workspace/volvo-ce-project/AwesomeCBR/commons-math3-3.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KKND/workspace/volvo-ce-project/AwesomeCBR/commons-math3-3.2-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/KKND/workspace/volvo-ce-project/AwesomeCBR/jmathplot.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
