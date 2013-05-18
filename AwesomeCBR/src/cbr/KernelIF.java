@@ -2,14 +2,15 @@ package cbr;
 
 public interface KernelIF {
 
-	// TODO File is too specific?! Use URL?!
-	
 	/**
 	 * Returns the names of the attributes Initializes the kernel from the given file of data points.  
-	 * 
-	 * @return	The named attributes for the data set
 	 */
-	String[] attributeNames();
+	String[] getAttributeNames();
+	
+	/**
+	 * Returns the <code>NaiveBayesClassifier</code>.
+	 */
+	NaiveBayesClassifier getClassifier();
 	
 	/**
 	 * Performs a k-Nearest Neighbor search 
