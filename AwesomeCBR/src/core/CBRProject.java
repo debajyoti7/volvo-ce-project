@@ -1,45 +1,28 @@
 package core;
 
-import java.util.ArrayList;
-import java.util.List;
+import cbr.Kernel;
+import cbr.KernelIF;
 
 public class CBRProject {
 	private String name;
-	private String dataset;
-	private List<CBRAttribute> attributes;
+	private String url;
+	private KernelIF kernel;
 	
-	public CBRProject() {}
-	
-	public CBRProject(String _name, String _dataset_url) {
-		this.name = _name;
-		this.dataset = _dataset_url;
-	}
-
-	public void setName(String _name) {
-		this.name = _name;
+	public CBRProject(String name, String url) {
+		this.name = name;
+		this.url = url;
+		kernel = new Kernel();
 	}
 	
 	public String getName() {
-		return this.name;
+		return name;
 	}
 	
-	public void setDataset(String _dataset) {
-		this.dataset = _dataset;
+	public String getURL() {
+		return url;
 	}
 	
-	public String getDataset() {
-		return this.dataset;
-	}
-	
-	public void addAttribute(CBRAttribute a) {
-		attributes.add(a);
-	}
-	
-	public List<CBRAttribute> getAttributes() {
-		return attributes;
-	}
-	
-	public void setAttributes(ArrayList<CBRAttribute> arrayList) {
-		attributes = arrayList;
+	public KernelIF getKernel() {
+		return kernel;
 	}
 }
