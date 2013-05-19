@@ -20,8 +20,6 @@ public class Kernel implements KernelIF {
 	
 	private final DoublePointMTree tree;
 	
-	// Create more constructors, e.g., initialize from URL?!
-	
 	/**
 	 *
 	 * @param dataSet	The file containing the data points.
@@ -33,7 +31,7 @@ public class Kernel implements KernelIF {
 	
 	public Kernel() {
 		// TODO make real
-		attributeNames = new String[]{"hello"};
+		attributeNames = new String[]{"attribute1", "attribute2", "attribute3"};
 		
 		final Random RANDOM = new Random();
 		final int SIZE = 100;
@@ -53,8 +51,13 @@ public class Kernel implements KernelIF {
 	}
 	
 	@Override
-	public String[] attributeNames() {
+	public String[] getAttributeNames() {
 		return attributeNames;
+	}	
+
+	@Override
+	public NaiveBayesClassifier getClassifier() {
+		return classifier;
 	}
 
 	@Override
@@ -68,13 +71,4 @@ public class Kernel implements KernelIF {
 		}
 		
 		return result.toArray(new double[0][]);
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-}
+	}}
