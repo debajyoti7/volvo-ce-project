@@ -42,27 +42,22 @@ public class NaiveBayesClassifier {
 	public Set<DoublePoint> noise() {
 		return noise;
 	}
-	/*
-	public double[] conditionalProbability(DoublePoint dataPoint, int index) {
-		double[] result = new double[clusters.size()];
-		double sumOfNormalizedValues = 0.0;
-		
-		for (int i = 0; i < clusters.size(); i++) {
-			NaiveBayesCluster cluster = clusters.get(i); 
-			result[i] = cluster.conditionalFeatureProbability(dataPoint, index);
-			sumOfNormalizedValues += result[i];
-			
-			double clusterProbability = (double)cluster.getPoints().size() / ( dataPoints.size() - noise.size() );
-			
-			result[i] *= clusterProbability;
-		}
-		for (int i = 0; i < result.length; i++) {
-			result[i] /= sumOfNormalizedValues;
-		}
-		return result;
-	}
-	*/
-	
+	/**
+	 * Calculates probability for a given case (aka feature vector).
+	 * <pre>
+	 * p(x) = [ ( p(x1|c1) * p(x2|c1) * ... * p(xK|c1) ) * p(c1) ] 
+	 *        +
+	 *        [ ( p(x1|c2) * p(x2|c2) * ... * p(xK|c2) ) * p(c2) ]
+	 *        +
+	 *        .
+	 *        .
+	 *        .
+	 *        +
+	 *        [ ( p(x1|cM) * p(x2|cM) * ... * p(xK|cM) ) * p(cM) ]
+	 *  
+	 * </pre>
+	 * This probability value is to be indexed by the M-tree. 
+	 */
 	public double caseProbability(DoublePoint dataPoint) {
 		double result = 0.0;
 		for (NaiveBayesCluster cluster : clusters) {
@@ -128,7 +123,7 @@ public class NaiveBayesClassifier {
 		plot(plot, "Lookup", Color.PINK, Collections.singleton(lookup));
 		
 		double[] probability = classifier.conditionalClassProbability(lookup);
-		for (int i = 0; i < lookup.getPoint().length; i++) {			
+		for (int i = 0; i < probability.length; i++) {			
 			System.out.println("probability for cluster: " + i + ": " + probability[i]); 
 		}
 		
@@ -150,4 +145,25 @@ public class NaiveBayesClassifier {
 		if (xy.length > 0)
 			plot.addScatterPlot(name, color, xy);
 	}
+	
+	/*
+	public double[] conditionalProbability(DoublePoint dataPoint, int index) {
+		double[] result = new double[clusters.size()];
+		double sumOfNormalizedValues = 0.0;
+		
+		for (int i = 0; i < clusters.size(); i++) {
+			NaiveBayesCluster cluster = clusters.get(i); 
+			result[i] = cluster.conditionalFeatureProbability(dataPoint, index);
+			sumOfNormalizedValues += result[i];
+			
+			double clusterProbability = (double)cluster.getPoints().size() / ( dataPoints.size() - noise.size() );
+			
+			result[i] *= clusterProbability;
+		}
+		for (int i = 0; i < result.length; i++) {
+			result[i] /= sumOfNormalizedValues;
+		}
+		return result;
+	}
+	*/
 }

@@ -88,7 +88,7 @@ public class CBRProject_View_JPanel extends JPanel {
 		btn_query.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(project.getKernel().getAttributeNames() != null) {
-					frame_query.setVisible(pFrame, project.getKernel().getAttributeNames(), true);
+					frame_query.setVisible(pFrame, project);
 				}
 				else {
 					JOptionPane.showMessageDialog(pFrame, "No attributes are specified.");

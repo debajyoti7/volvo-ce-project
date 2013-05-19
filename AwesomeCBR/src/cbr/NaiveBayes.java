@@ -3,7 +3,6 @@ package cbr;
 import java.util.*;
 
 import org.apache.commons.math3.ml.clustering.*;
-import org.apache.commons.math3.ml.distance.*;
 
 public class NaiveBayes {
 	
