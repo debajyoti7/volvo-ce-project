@@ -9,8 +9,6 @@ import java.awt.EventQueue;
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import cbr.Kernel;
-import cbr.KernelIF;
 import core.CBRProject;
 import core.CBRControler;
 import javax.swing.JMenu;
@@ -20,12 +18,22 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.UIManager;
 import java.awt.Dimension;
-import java.io.File;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *	-	JFormattedTextField instead of JTextField for the kNN-search values.
+ * 		Ensures a valid double value
+ * 	-	setLocationRelativeTo(null);	// Centers on screen
+ * 	-	The kNN search panel now get a reference to the kernel so it can perform
+ * 		a real search
+ * 	-	A JSpinner to define the k in the kNN-search. VITAL :-) 
+ *  -	Calculate probability for a data point with the 
+ *  	Naive Bayes classifier BEFORE performing the kNN request!
+ *  	Use the caseProbability method in NaiveBayesClassifier
+ */
 @SuppressWarnings("serial")
 public class AwesomeCBR extends JFrame {	
 	private CBRControler pm;
@@ -65,6 +73,7 @@ public class AwesomeCBR extends JFrame {
 		setTitle("AwesomeCBR");
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);	// Centers on screen
 		
 		contentPane = new JPanel();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

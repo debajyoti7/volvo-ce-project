@@ -1,11 +1,6 @@
 package cbr;
 
-import java.util.*;
-
-import org.apache.commons.math3.stat.descriptive.*;
-
 import org.apache.commons.math3.ml.clustering.*;
-import org.apache.commons.math3.ml.distance.*;
 
 @SuppressWarnings("serial")
 public class NaiveBayesCluster extends Cluster<DoublePoint> {
@@ -86,8 +81,19 @@ public class NaiveBayesCluster extends Cluster<DoublePoint> {
 		return ( 1 / denominator ) * Math.pow( Math.E, -( (d * d) / (2 * variance[index]) ) ); 
 	}
 	
+	/**
+	 * Calculates the product over conditional probability for a given case.
+	 * 
+	 * <pre>
+	 * &#8719 = [ ( p(x1|c) * p(x2|c) * ... * p(xK|c) ) * p(c) ] 
+	 * </pre>
+	 * 
+	 * @param dp the given case
+	 * @param totalClusteredDataPoints 
+	 * 			the total number of data points (<em>omitting</em> noise data!)
+	 */
 	// TODO use sum of log instead of multiplication 
-	double conditionalProbability(DoublePoint dp, int totalClusteredDataPoints) {
+	public double conditionalProbability(DoublePoint dp, int totalClusteredDataPoints) {
 		
 		// calculate the product of all conditional probabilities for every feature
 		double result = conditionalFeatureProbability(dp, 0);
