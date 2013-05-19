@@ -3,7 +3,6 @@ package mtree;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -11,7 +10,6 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import mtree.SplitFunction.SplitResult;
-import mtree.utils.Pair;
 
 
 /**
@@ -45,6 +43,10 @@ public class MTree<DATA> {
 	
 	// Exception classes
 	private static class SplitNodeReplacement extends Exception {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		// A subclass of Throwable cannot be generic.  :-(
 		// So, we have newNodes declared as Object[] instead of Node[].
 		private Object newNodes[];
@@ -54,6 +56,7 @@ public class MTree<DATA> {
 		}
 	}
 	
+	@SuppressWarnings("serial")
 	private static class RootNodeReplacement extends Exception {
 		// A subclass of Throwable cannot be generic.  :-(
 		// So, we have newRoot declared as Object instead of Node.
@@ -65,10 +68,20 @@ public class MTree<DATA> {
 	}
 
 	
-	private static class NodeUnderCapacity extends Exception { }
+	private static class NodeUnderCapacity extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L; }
 	
 
-	private static class DataNotFound extends Exception { }
+	private static class DataNotFound extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L; }
 
 	/**
 	 * An {@link Iterable} class which can be iterated to fetch the results of a

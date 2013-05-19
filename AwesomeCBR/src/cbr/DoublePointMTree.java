@@ -10,6 +10,10 @@ import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import mtree.*;
 import mtree.utils.Pair;
 
+/**
+ * TODO change name since its input is NOT DoublePoint
+ * TODO make appropriate updates to create the index structure by the probability values
+ */
 public class DoublePointMTree extends MTree<DoublePoint> {
 		
 	private static final DistanceMeasure EUCLIDEAN = new EuclideanDistance(); 

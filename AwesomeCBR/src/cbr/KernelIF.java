@@ -1,5 +1,9 @@
 package cbr;
 
+import java.util.List;
+
+import org.apache.commons.math3.ml.clustering.DoublePoint;
+
 public interface KernelIF {
 
 	/**
@@ -26,5 +30,5 @@ public interface KernelIF {
 	 * @throws	IndexOutOfBoundsException
 	 * 			if k < 1 or if the attributes array is of zero length
 	 */
-	double[][] kNNQuery(int k, double... attributes); 
+	List<DoublePoint> kNNQuery(int k, double... attributes); 
 }
