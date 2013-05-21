@@ -5,7 +5,7 @@ import org.apache.commons.math3.ml.clustering.*;
 @SuppressWarnings("serial")
 public class NaiveBayesCluster extends Cluster<DoublePoint> {
 	
-	private static int counter = 0;
+	//private static int counter = 0;
 	private final int ordinal;
 	
 	private final double[] mean;
@@ -29,8 +29,8 @@ public class NaiveBayesCluster extends Cluster<DoublePoint> {
 		return ordinal;
 	}
 	
-	public NaiveBayesCluster(Cluster<DoublePoint> cluster) {
-		ordinal = counter++;
+	public NaiveBayesCluster(int ordinal, Cluster<DoublePoint> cluster) {
+		this.ordinal = ordinal;
 		//probability = (double)cluster.getPoints().size() / totalNumberOfDataPoints;
 		
 		// Add all data points from the given cluster to this cluster

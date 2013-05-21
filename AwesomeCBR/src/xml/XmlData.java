@@ -149,11 +149,10 @@ public class XmlData {
 	 */
 	public static void main(String[] args) throws Exception {
 //		XmlData x = new XmlData(new File("test.xml"));
-		XmlData x = new XmlData(new File("full.xml"));
+		XmlData x = new XmlData(new File("full2.xml"));
 		
 		for (Sample sample : x.samples) {
-			System.out.println(sample.xValues.length);
-			
+			System.out.println(sample.xValues.length);			
 		}
 	}
 }

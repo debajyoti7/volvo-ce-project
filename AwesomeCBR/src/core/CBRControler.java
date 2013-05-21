@@ -19,7 +19,12 @@ public class CBRControler {
 		try {
 			String[] projectNames = prefRoot.childrenNames();
 			for (String pName : projectNames) {
-				projects.add(new CBRProject(pName, prefRoot.node(pName).get("url", "FuckedUpHeavily!")));
+				try {
+					projects.add(new CBRProject(pName, prefRoot.node(pName).get("url", "FuckedUpHeavily!")));
+				} catch (Exception e) {
+					// The user probably deleted the resource
+					prefRoot.node(pName);
+				}
 			}
 		} catch (BackingStoreException bse) {
 			bse.printStackTrace();
