@@ -14,6 +14,7 @@ import core.CBRControler;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.UIManager;
@@ -97,7 +98,7 @@ public class AwesomeCBR extends JFrame {
 					CBRProject p = new CBRProject(np.getProjectName(), np.getURL());
 					pm.add(p);
 					
-					// To selecte the newly created project.
+					// To select the newly created project.
 					refreshView(pm.getProjectNames().indexOf(np.getProjectName()));
 				}
 		    }
@@ -130,14 +131,29 @@ public class AwesomeCBR extends JFrame {
 		f3.setMnemonic('D');
 		f3.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ae) {
-		    	pm.remove(list_projects.getSelectedValue().toString());
-		    	
-				refreshView(0);				
-				// TODO clean project_area after last item is deleted
+		    	int n = JOptionPane.showConfirmDialog(null, "Are you sure?", "Delete confirmation", JOptionPane.YES_NO_OPTION);
+				if(n == JOptionPane.YES_OPTION) {
+					ppanels.get(list_projects.getSelectedIndex()).amosDisconnect();
+					pm.remove(list_projects.getSelectedValue().toString());
+					refreshView(0);
+				}
 		    }
 		});
 		file.add(f3);
 		bar.add(file);
+		
+		
+		JMenu help = new JMenu("Help");
+		bar.add(help);
+		
+		help.setMnemonic('H');
+		JMenuItem h1 = new JMenuItem("About");
+		help.add(h1);
+		h1.setMnemonic('A');
+		h1.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent ae) {
+		    }
+		});
 			
 		setJMenuBar(bar);
 		
@@ -185,25 +201,21 @@ public class AwesomeCBR extends JFrame {
 		// Refresh projects.
 		disable_listeners = true;
 		list_projects.setListData(AwesomeCBR.this.pm.getProjectNames().toArray(new String[AwesomeCBR.this.pm.getProjectNames().size()]));
+		disable_listeners = false;
 		
 		// Create Panels
-		for(CBRProject_View_JPanel p : ppanels) {
-			p.amosDisconnect();
-		}
+		//for(CBRProject_View_JPanel p : ppanels) {
+		//	p.amosDisconnect();
+		//}
+		
 		ppanels.clear();
 		
-		
+		// TODO clear projects_area as well.
 		for(CBRProject p : pm.getProjects()) {
 			CBRProject_View_JPanel tmp = new CBRProject_View_JPanel(p, AwesomeCBR.this);
-			
-			tmp.tbp.addTab("Plot", new ClassifierPanel(p.getKernel().getClassifier()));
-			tmp.tbp.setSelectedIndex(1);
-			
 			ppanels.add(tmp);
 			projects_area.add(tmp);
 		}
-		
-		disable_listeners = false;		
 		
 		if(AwesomeCBR.this.pm.getProjects().size() > 0) {
 			list_projects.setSelectedIndex(selected_index);
@@ -214,6 +226,10 @@ public class AwesomeCBR extends JFrame {
 		else {
 			//f2.setEnabled(false);
 			f3.setEnabled(false);
+			
+			//for(Component comp : projects_area.getComponents()) {
+			//	projects_area.remove(comp);
+			//}
 		}
 	}
 }
