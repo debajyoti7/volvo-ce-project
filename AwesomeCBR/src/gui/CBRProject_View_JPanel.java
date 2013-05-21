@@ -104,9 +104,9 @@ public class CBRProject_View_JPanel extends JPanel {
 
 		/* PLOT TAB */
 		//tbp.addTab("Plot", pnl_query);
+		tbp.addTab("Clustering", new ClassifierPanel(p.getKernel().getClassifier()));
 
 		/* AMOS II TAB */
-
 		JComponent pnl_amos = new Default_JPanel(BoxLayout.Y_AXIS);
 		JComponent button_bar = new Default_JPanel(BoxLayout.X_AXIS);
 		btn_connect.setBorder(null);
