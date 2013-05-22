@@ -38,7 +38,7 @@ public class KNNSearch_JFrame extends JFrame {
 		SpinnerModel model = new SpinnerNumberModel(10, 3, 100, 1);
 		final JSpinner kSpinner = new JSpinner(model);		
 		JPanel topPanel = new JPanel();
-		topPanel.add(new JLabel("Define k: "));
+		topPanel.add(new JLabel("Define number of neighbors (k): "));
 		topPanel.add(kSpinner);
 		add(topPanel);
 		
