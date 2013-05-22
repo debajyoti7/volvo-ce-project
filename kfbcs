@@ -1,0 +1,217 @@
+[33mcommit f56329b974c6b821297e315e271c49f684731fa2[m
+Author: larsen <tobial_larsen@hotmail.com>
+Date:   Tue May 21 18:23:27 2013 +0200
+
+    Reading from XML. M-tree integration. DBSCAN calibration.
+
+[33mcommit 52237001bfedeebc11deabc3ba5058e59ef8bb02[m
+Author: larsen <tobial_larsen@hotmail.com>
+Date:   Sun May 19 20:21:38 2013 +0200
+
+    Updates in the GUI and preperations for correct M-tree indexing.
+
+[33mcommit 52ead9603237ff09ac4e0a6d9b5499aefcd48776[m
+Merge: 086ec6b 2b651da
+Author: debajyoti7 <dave0908@gmail.com>
+Date:   Sun May 19 04:53:02 2013 -0700
+
+    Merge pull request #9 from kdop/master
+    
+    modules merged
+
+[33mcommit 2b651dab81caadcdde4eb160d9e34f1345eaa4a2[m
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Sat May 18 19:51:24 2013 +0200
+
+    Merged at last, plus many changes.
+
+[33mcommit 086ec6b9bc468b845d851c5ad1c0b5b25b7be7dc[m
+Merge: 3442cce 28c064b
+Author: debajyoti7 <dave0908@gmail.com>
+Date:   Fri May 17 10:51:53 2013 -0700
+
+    Merge pull request #8 from kdop/master
+    
+    Merged the two modules
+
+[33mcommit 28c064b2fa02adf8f671ee443b89475e68770a01[m
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Fri May 17 19:49:59 2013 +0200
+
+    Merged the two modules
+
+[33mcommit 3442ccedc82f6272c2031c3405218f1ed404a625[m
+Merge: 93320c9 a0179ff
+Author: debajyoti7 <dave0908@gmail.com>
+Date:   Fri May 17 09:01:57 2013 -0700
+
+    Merge pull request #7 from kdop/master
+    
+    Pull before merge
+
+[33mcommit a0179ffc95318cf5182b051f2d9c86a67dd433a5[m
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Fri May 17 17:52:16 2013 +0200
+
+    More enhancements
+
+[33mcommit 3eac6d555c4be230bdb0b55f7004bb2ded5a233d[m
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Fri May 17 15:24:43 2013 +0200
+
+    Minor improvements
+
+[33mcommit 93320c9dbb314e59cca2f942f79e664c6baaa12d[m
+Merge: 70399a8 78ad792
+Author: debajyoti7 <dave0908@gmail.com>
+Date:   Wed May 15 10:06:05 2013 -0700
+
+    Merge pull request #6 from kdop/master
+    
+    AMOS II Connectivity
+
+[33mcommit 78ad792b61a5eb5e80173833ef766d3f3d401be4[m
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Wed May 15 19:01:59 2013 +0200
+
+    AMOS II interface.
+
+[33mcommit 864a2bdc312ba93736b7464a6757f0a625d019a7[m
+Merge: 92ae140 70399a8
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Wed May 15 18:59:20 2013 +0200
+
+    Merge remote-tracking branch 'volvo/master'
+
+[33mcommit 70399a83cd2e58eb164c2bda2e8b9620936f9876[m
+Merge: b48cd05 aa6ddfc
+Author: debajyoti7 <dave0908@gmail.com>
+Date:   Wed May 15 09:49:45 2013 -0700
+
+    Merge pull request #5 from Larsenik/master
+    
+    implemented Kernel Interface
+
+[33mcommit aa6ddfca864f7f7c1f8320dcd41be26ac391bbc1[m
+Author: larsen <tobial_larsen@hotmail.com>
+Date:   Wed May 15 18:36:07 2013 +0200
+
+    updates, including kernel interface
+
+[33mcommit 92ae1403df190edb361cf7a54236576c209323b0[m
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Sun May 12 13:19:41 2013 +0200
+
+    12-5
+
+[33mcommit b48cd05cc510302ab0005beecb5f02e8b114a9f8[m
+Merge: b3b8584 0cb6833
+Author: debajyoti7 <dave0908@gmail.com>
+Date:   Thu May 9 12:39:59 2013 -0700
+
+    Merge pull request #4 from Larsenik/master
+    
+    updated naive bayes classifier. It can now accommodate probability >1.
+
+[33mcommit 2f8ec05fc2869d21c18178c93cbcc7104d3ee27e[m
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Thu May 9 21:02:04 2013 +0200
+
+    09-05
+
+[33mcommit 0cb68337f16ce05b1ee44e84ef0c501e02cadf0f[m
+Author: larsen <tobial_larsen@hotmail.com>
+Date:   Thu May 9 20:41:41 2013 +0200
+
+    updated naive bayes classifier
+
+[33mcommit 93b8b1cfd69e398a1d2123f01a591732719f93f2[m
+Author: larsen <tobial_larsen@hotmail.com>
+Date:   Thu May 9 20:37:13 2013 +0200
+
+    Naive Bayes Classifier updates
+
+[33mcommit a39c6fea4a6cdb48bd4e513c711272612c3e145f[m
+Merge: 6bd2128 b3b8584
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Thu May 9 15:34:31 2013 +0200
+
+    Merge remote-tracking branch 'upstream1/master'
+    
+    Conflicts:
+    	Clustering/.classpath
+
+[33mcommit b3b85847798bd4a6f90301c1c233aa7c47625a08[m
+Merge: 244f7c8 6720f62
+Author: debajyoti7 <dave0908@gmail.com>
+Date:   Wed May 8 11:26:56 2013 -0700
+
+    Merge pull request #3 from Larsenik/master
+    
+    added Naive Bayes Classifier
+
+[33mcommit 6720f621b52cef058cf2f776e391a5649f76f088[m
+Author: larsen <tobial_larsen@hotmail.com>
+Date:   Wed May 8 19:45:49 2013 +0200
+
+    added Naive Bayes Classifier
+
+[33mcommit 6bd21284e1980740e3566bf54689e2c2135f1fbc[m
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Fri May 3 17:27:09 2013 +0200
+
+    Commit of friday
+
+[33mcommit 244f7c84a62776861797dfaa49bf735fbbfcfbf9[m
+Merge: dd346ac df99bdd
+Author: debajyoti7 <dave0908@gmail.com>
+Date:   Thu May 2 07:25:47 2013 -0700
+
+    Merge pull request #2 from Larsenik/master
+    
+    initial commit for clustering module
+
+[33mcommit df99bdda6b72dc6b81378a78c54a61f2ff7978ca[m
+Author: larsen <tobial_larsen@hotmail.com>
+Date:   Thu May 2 16:22:06 2013 +0200
+
+    initial commit for clustering module
+
+[33mcommit dd346ac524c36a960bae648896047bda83de4d64[m
+Author: Debajyoti Nag <dave0908@gmail.com>
+Date:   Wed May 1 21:16:11 2013 +0530
+
+    Project Description Updated
+
+[33mcommit c464b53ba1a8ae7622f88d61be11f80f70ca2853[m
+Merge: f6fe7b8 1b6424b
+Author: debajyoti7 <dave0908@gmail.com>
+Date:   Wed May 1 08:40:33 2013 -0700
+
+    Merge pull request #1 from kdop/master
+    
+    Initial merge for accessibility features.
+
+[33mcommit 1b6424bd2a62833731ed4fc188294ccbf0ec5995[m
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Wed May 1 17:08:18 2013 +0200
+
+    Alpha fixed
+
+[33mcommit 3a9a8004357551758340b50f6bb1b9d9cae361f2[m
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Wed May 1 17:00:00 2013 +0200
+
+    Second try
+
+[33mcommit fc9497045d92d970556989acff895e0e7bca5ac5[m
+Author: kdop <k_dopoulos@yahoo.com>
+Date:   Wed May 1 16:42:26 2013 +0200
+
+    Alpha
+
+[33mcommit f6fe7b8cd707766fa510498a7781c92acc4c7a8e[m
+Author: debajyoti7 <dave0908@gmail.com>
+Date:   Tue Apr 30 06:41:00 2013 -0700
+
+    Initial commit

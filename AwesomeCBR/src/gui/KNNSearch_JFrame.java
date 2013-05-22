@@ -101,26 +101,13 @@ public class KNNSearch_JFrame extends JFrame {
 			
 			JLabel l = new JLabel(label);
 			l.setFont(Settings.font_normal);
-			//l.setMinimumSize(new Dimension(Settings.tabs_first_col_width, Settings.JTextField_height));
-			//l.setMaximumSize(new Dimension(Settings.tabs_first_col_width, Settings.JTextField_height));
-			//l.setPreferredSize(new Dimension(Settings.tabs_first_col_width, Settings.JTextField_height));
 			add(l);
 			
 			t = new JFormattedTextField(0.0);
-//			t.setValue(new Double(0.0));
 			t.setMinimumSize(new Dimension(250, Settings.JTextField_height));
 			t.setMaximumSize(new Dimension(32767, Settings.JTextField_height));
 			t.setPreferredSize(new Dimension(250, Settings.JTextField_height));
-//			t.setText(value);
 			add(t);
 		}
-//		
-//		/*public void setText(String text) {
-//			t.setText(text);
-//		}*/
-//		
-//		public String getText() {
-//			return t.getText();
-//		}
 	}
 }
