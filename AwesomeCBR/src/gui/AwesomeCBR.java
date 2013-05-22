@@ -244,6 +244,10 @@ public class AwesomeCBR extends JFrame {
 			// Disable Project->Delete...
 			//f2.setEnabled(false);
 			f3.setEnabled(false);
+			
+			//for(Component comp : projects_area.getComponents()) {
+			//	projects_area.remove(comp);
+			//}
 		}
 	}
 }
