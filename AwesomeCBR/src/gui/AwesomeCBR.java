@@ -92,9 +92,6 @@ public class AwesomeCBR extends JFrame {
 				np.setVisible(true);
 				
 				if(np.isValidated()) {
-					//Kernel kernel = new Kernel(new File(np.getURL()));
-					//KernelIF kernel = new Kernel(new File(np.getURL()));
-					//String[] attribute_names = kernel.getAttributeNames();
 					CBRProject p = new CBRProject(np.getProjectName(), np.getURL());
 					pm.add(p);
 					
@@ -152,6 +149,7 @@ public class AwesomeCBR extends JFrame {
 		h1.setMnemonic('A');
 		h1.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ae) {
+		    	// TODO
 		    }
 		});
 			
