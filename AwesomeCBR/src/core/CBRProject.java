@@ -18,7 +18,7 @@ public class CBRProject {
 	public CBRProject(String name, String url) throws IOException, ParserConfigurationException, SAXException {
 		this.name = name;
 		this.url = url;
-		kernel = new Kernel(new File(url));
+		kernel = new Kernel(new File(url), 0.0, 1);
 	}
 	
 	public String getName() {
