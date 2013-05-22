@@ -1,8 +1,12 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.Collection;
 import java.util.Collections;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 
 import org.apache.commons.math3.ml.clustering.DoublePoint;
 import org.math.plot.Plot2DPanel;
@@ -18,8 +22,13 @@ public class ClassifierPanel extends Plot2DPanel {
 	public ClassifierPanel(NaiveBayesClassifier classifier) {
 		setFixedBounds(0, 0.0, 1.0);
 		setFixedBounds(1, 0.0, 1.0);
+		
+		//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		//this.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+		
+		//this.add(new JLabel("123"));
 			
-		for (NaiveBayesCluster c : classifier.clusters()) {			
+		for (NaiveBayesCluster c : classifier.clusters()) {
 			plot(c.name(), Color.RED, c.getPoints());
 		}
 	
