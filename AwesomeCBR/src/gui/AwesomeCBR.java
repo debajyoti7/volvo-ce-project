@@ -186,11 +186,13 @@ public class AwesomeCBR extends JFrame {
 		list_projects.addListSelectionListener(new ListSelectionListener() {
 			// selection changed
 			public void valueChanged(ListSelectionEvent arg0) {
+				int sIndex = list_projects.getSelectedIndex();
 				if(!AwesomeCBR.this.disable_listeners) {
 					for(Component c : projects_area.getComponents()) {
 						c.setVisible(false);
 					}
-					ppanels.get(list_projects.getSelectedIndex()).setVisible(true);
+					ppanels.get(sIndex).setVisible(true);
+					setTitle("AwesomeCBR - "+pm.getProjects().get(sIndex).getName());
 				}
 			}
 		});
@@ -209,31 +211,37 @@ public class AwesomeCBR extends JFrame {
 	
 	private void refreshView(int selected_index) {
 		// Refresh projects.
-		disable_listeners = true;
-		list_projects.setListData(AwesomeCBR.this.pm.getProjectNames().toArray(new String[AwesomeCBR.this.pm.getProjectNames().size()]));
-		disable_listeners = false;
-		
-		// Create Panels
-		//for(CBRProject_View_JPanel p : ppanels) {
-		//	p.amosDisconnect();
-		//}
-		
-		ppanels.clear();
-		
-		// TODO clear projects_area as well.
-		for(CBRProject p : pm.getProjects()) {
-			CBRProject_View_JPanel tmp = new CBRProject_View_JPanel(p, AwesomeCBR.this);
-			ppanels.add(tmp);
-			projects_area.add(tmp);
-		}
 		
 		if(AwesomeCBR.this.pm.getProjects().size() > 0) {
+			disable_listeners = true;
+			list_projects.setListData(AwesomeCBR.this.pm.getProjectNames().toArray(new String[AwesomeCBR.this.pm.getProjectNames().size()]));
+			disable_listeners = false;
+			
+			for(CBRProject p : pm.getProjects()) {
+				CBRProject_View_JPanel tmp = new CBRProject_View_JPanel(p, AwesomeCBR.this);
+				ppanels.add(tmp);
+				projects_area.add(tmp);
+			}
+			
 			list_projects.setSelectedIndex(selected_index);
 			ppanels.get(selected_index).setVisible(true);
+			
+			// Enable Project->Delete...
 			//f2.setEnabled(true);
 			f3.setEnabled(true);
 		}
 		else {
+			disable_listeners = true;
+			list_projects.setListData(new String[] {""});
+			disable_listeners = false;
+			ppanels.clear();
+			setTitle("AwesomeCBR");
+			
+			projects_area.removeAll();
+			projects_area.revalidate();
+			projects_area.repaint();
+			
+			// Disable Project->Delete...
 			//f2.setEnabled(false);
 			f3.setEnabled(false);
 			

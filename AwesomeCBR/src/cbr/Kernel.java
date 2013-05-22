@@ -21,7 +21,7 @@ import xml.XmlData;
  */
 public class Kernel implements KernelIF {
 	
-	private final String[] attributeNames;
+	private String[] attributeNames;
 	
 	private final NaiveBayesClassifier classifier;
 	
@@ -35,23 +35,19 @@ public class Kernel implements KernelIF {
 	 *
 	 * @param dataFile The file containing the data points.
 	 */
-	public Kernel(File dataFile) throws IOException, ParserConfigurationException, SAXException {
-		this(populateFromXmlFile(dataFile, new HashSet<DoublePoint>()));
-		
-	}
-	
-	public Kernel() {
-		this(populateRandom(new HashSet<DoublePoint>(), 100));
-	}
-	
-	public Kernel(Set<DoublePoint> dataPoints) {
 
-		// TODO make real
-		attributeNames = new String[]{"attribute1", "attribute2"};
-		
-		// TODO how to configure these values
-		double eps = 0.5;
-		int minPts = 4;
+	public Kernel(File dataFile, double eps, int minPts) throws IOException, ParserConfigurationException, SAXException {
+		this(populateFromXmlFile(dataFile, new HashSet<DoublePoint>()), eps, minPts);
+	}
+	
+	public Kernel(int size, double eps, int minPts) {
+		this(populateRandom(new HashSet<DoublePoint>(), 100), eps, minPts);
+	}
+	
+	public Kernel(Set<DoublePoint> dataPoints, double eps, int minPts) {
+		if (dataPoints.isEmpty())
+			throw new IllegalArgumentException("empty data set");
+
 		DBSCANClusterer<DoublePoint> dbScan = new DBSCANClusterer<>(eps, minPts);
 		
 		classifier = new NaiveBayesClassifier(dbScan, dataPoints);
@@ -60,12 +56,18 @@ public class Kernel implements KernelIF {
 		
 		// TODO add the case probabilities for all data points
 		for (DoublePoint doublePoint : dataPoints) {
+			if (attributeNames == null) {
+				attributeNames = new String[doublePoint.getPoint().length];
+				for (int i = 0; i < attributeNames.length; i++) {
+					attributeNames[i] = "attribute" + (i + 1);
+				}
+			}
 			double classifiedDataPoint = classifier.caseProbability(doublePoint);
 						
 			dataPointsMap.put(classifiedDataPoint, doublePoint);
 			
 			tree.add(classifiedDataPoint);
-		}		
+		}
 	}
 	
 	@Override
