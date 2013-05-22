@@ -105,6 +105,9 @@ public class CBRProject_View_JPanel extends JPanel {
 		/* PLOT TAB */
 		//tbp.addTab("Plot", pnl_query);
 <<<<<<< HEAD
+		tbp.addTab("Clustering", new ClassifierPanel(p.getKernel().getClassifier()));
+=======
+<<<<<<< HEAD
 		JComponent clust_tab = new Default_JPanel(BoxLayout.Y_AXIS);
 			JComponent clust_toolbar = new Default_JPanel(BoxLayout.X_AXIS);
 			//clust_toolbar.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
@@ -127,6 +130,7 @@ public class CBRProject_View_JPanel extends JPanel {
 =======
 		tbp.addTab("Clustering", new ClassifierPanel(p.getKernel().getClassifier()));
 >>>>>>> 118cad41a3dcd705def79110af4dd2ae0950d206
+>>>>>>> upstream/master
 
 		/* AMOS II TAB */
 		JComponent pnl_amos = new Default_JPanel(BoxLayout.Y_AXIS);

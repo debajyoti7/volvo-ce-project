@@ -35,7 +35,10 @@ public class Kernel implements KernelIF {
 	 *
 	 * @param dataFile The file containing the data points.
 	 */
+<<<<<<< HEAD
+=======
 
+>>>>>>> upstream/master
 	public Kernel(File dataFile, double eps, int minPts) throws IOException, ParserConfigurationException, SAXException {
 		this(populateFromXmlFile(dataFile, new HashSet<DoublePoint>()), eps, minPts);
 	}

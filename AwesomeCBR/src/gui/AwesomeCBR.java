@@ -211,6 +211,27 @@ public class AwesomeCBR extends JFrame {
 	
 	private void refreshView(int selected_index) {
 		// Refresh projects.
+<<<<<<< HEAD
+		disable_listeners = true;
+		list_projects.setListData(AwesomeCBR.this.pm.getProjectNames().toArray(new String[AwesomeCBR.this.pm.getProjectNames().size()]));
+		disable_listeners = false;
+		
+		// Create Panels
+		//for(CBRProject_View_JPanel p : ppanels) {
+		//	p.amosDisconnect();
+		//}
+		
+		ppanels.clear();
+		
+		// TODO clear projects_area as well.
+		for(CBRProject p : pm.getProjects()) {
+			CBRProject_View_JPanel tmp = new CBRProject_View_JPanel(p, AwesomeCBR.this);
+			ppanels.add(tmp);
+			projects_area.add(tmp);
+		}
+		
+		if(AwesomeCBR.this.pm.getProjects().size() > 0) {
+=======
 		
 		if(AwesomeCBR.this.pm.getProjects().size() > 0) {
 			disable_listeners = true;
@@ -223,6 +244,7 @@ public class AwesomeCBR extends JFrame {
 				projects_area.add(tmp);
 			}
 			
+>>>>>>> upstream/master
 			list_projects.setSelectedIndex(selected_index);
 			ppanels.get(selected_index).setVisible(true);
 			
