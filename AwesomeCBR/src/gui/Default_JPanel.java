@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class Default_JPanel extends JPanel {
 	public Default_JPanel(int l) {
-		setLayout(new BoxLayout(this, l));
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBorder(new EmptyBorder(Settings.border_size, Settings.border_size, Settings.border_size, Settings.border_size));
 		setBackground(Color.WHITE);
 	}

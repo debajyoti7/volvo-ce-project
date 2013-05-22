@@ -89,7 +89,7 @@ public class XmlData {
 	private Map<Program, String> program;
 	private Map<Run, String> run;	
 	private List<Sample> samples = new ArrayList<>();	
-
+	
 	public XmlData(File file) throws IOException, ParserConfigurationException, SAXException {
 		
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
