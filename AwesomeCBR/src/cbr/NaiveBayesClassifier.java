@@ -18,8 +18,9 @@ public class NaiveBayesClassifier {
 		this.dataPoints = Collections.unmodifiableSet(new HashSet<>(dataPoints));
 		this.noise = new HashSet<>(dataPoints);
 				
+		int clusterOrdinal = 1;
 		for (Cluster<DoublePoint> cluster : clusterer.cluster(dataPoints)) {						
-			clusters.add(new NaiveBayesCluster(cluster));
+			clusters.add(new NaiveBayesCluster(clusterOrdinal++, cluster));
 		}
 		
 		for (Cluster<DoublePoint> c : clusters) {

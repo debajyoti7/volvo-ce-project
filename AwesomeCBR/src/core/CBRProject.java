@@ -1,5 +1,12 @@
 package core;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import cbr.Kernel;
 import cbr.KernelIF;
 
@@ -8,10 +15,10 @@ public class CBRProject {
 	private String url;
 	private KernelIF kernel;
 	
-	public CBRProject(String name, String url) {
+	public CBRProject(String name, String url) throws IOException, ParserConfigurationException, SAXException {
 		this.name = name;
 		this.url = url;
-		kernel = new Kernel();
+		kernel = new Kernel(new File(url));
 	}
 	
 	public String getName() {
