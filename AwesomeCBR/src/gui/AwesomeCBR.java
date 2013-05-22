@@ -21,8 +21,10 @@ import javax.swing.UIManager;
 import java.awt.Dimension;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *	-	JFormattedTextField instead of JTextField for the kNN-search values.
@@ -36,7 +38,7 @@ import java.util.List;
  *  	Use the caseProbability method in NaiveBayesClassifier
  */
 @SuppressWarnings("serial")
-public class AwesomeCBR extends JFrame {	
+public class AwesomeCBR extends JFrame {
 	private CBRControler pm;
 	private List<CBRProject_View_JPanel> ppanels = new ArrayList<CBRProject_View_JPanel>();
 	private Boolean disable_listeners = false;
@@ -58,8 +60,9 @@ public class AwesomeCBR extends JFrame {
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
+				try {					
 					AwesomeCBR frame = new AwesomeCBR();
+					frame.setLocale(Locale.US);
 					frame.setVisible(true);
 				}
 				catch (Exception e) {
@@ -92,11 +95,20 @@ public class AwesomeCBR extends JFrame {
 				np.setVisible(true);
 				
 				if(np.isValidated()) {
-					CBRProject p = new CBRProject(np.getProjectName(), np.getURL());
-					pm.add(p);
+					try {
+						CBRProject p = new CBRProject(np.getProjectName(), np.getURL());
+						pm.add(p);
+						
+						// To selecte the newly created project.
+						refreshView(pm.getProjectNames().indexOf(np.getProjectName()));
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(
+								AwesomeCBR.this, 
+								"Unexpected error occured: \n" + e.toString(),
+								"Unexpected error",
+								JOptionPane.ERROR_MESSAGE);
+					}
 					
-					// To select the newly created project.
-					refreshView(pm.getProjectNames().indexOf(np.getProjectName()));
 				}
 		    }
 		});
