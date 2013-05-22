@@ -20,10 +20,15 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import core.CBRProject;
 import core.AmosProcessBuilder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 @SuppressWarnings("serial")
 public class CBRProject_View_JPanel extends JPanel {
@@ -41,7 +46,7 @@ public class CBRProject_View_JPanel extends JPanel {
 	
 	public JTabbedPane tbp = new JTabbedPane();
 
-	public CBRProject_View_JPanel(CBRProject p, final JFrame pFrame) {
+	public CBRProject_View_JPanel(final CBRProject p, final JFrame pFrame) {
 		project = p;
 		connector = new AmosProcessBuilder(status_textarea);
 
@@ -49,7 +54,7 @@ public class CBRProject_View_JPanel extends JPanel {
 		setVisible(false);
 
 		Default_JPanel up = new Default_JPanel(BoxLayout.Y_AXIS);
-		Default_JPanel u1 = new Default_JPanel(BoxLayout.X_AXIS);
+		JPanel u1 = new JPanel();
 		JLabel title = new JLabel(p.getName() + " :: " + p.getURL());
 		title.setMaximumSize(new Dimension(Integer.MAX_VALUE, Settings.JTextField_height));
 		title.setFont(new Font("Verdana", Font.BOLD, 14));
@@ -104,23 +109,51 @@ public class CBRProject_View_JPanel extends JPanel {
 
 		/* PLOT TAB */
 		//tbp.addTab("Plot", pnl_query);
-		JComponent clust_tab = new Default_JPanel(BoxLayout.Y_AXIS);
+		final JComponent clust_tab = new Default_JPanel(BoxLayout.Y_AXIS);
 			JComponent clust_toolbar = new Default_JPanel(BoxLayout.X_AXIS);
 			//clust_toolbar.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 				clust_toolbar.add(new JLabel("Epsilon:"));
-				JTextField epsilon_text = new JTextField();
+				final JTextField epsilon_text = new JTextField();
 				epsilon_text.setMaximumSize(new Dimension(Integer.MAX_VALUE, Settings.JTextField_height));
 				clust_toolbar.add(epsilon_text);
 				
 				clust_toolbar.add(new JLabel("   minPts:"));
-				JTextField pts_text = new JTextField();
+				final JTextField pts_text = new JTextField();
 				pts_text.setMaximumSize(new Dimension(Integer.MAX_VALUE, Settings.JTextField_height));
 				clust_toolbar.add(pts_text);
 				
-				clust_toolbar.add(new JButton("Do clustering"));
+				JButton btn_clustering = new JButton("Do clustering");
+				btn_clustering.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						double epsilon = Double.parseDouble(epsilon_text.getText());
+						int points = Integer.parseInt(pts_text.getText());
+						
+						//if() {
+							//JOptionPane.showMessageDialog(CBRProject_View_JPanel.this, "Couldn't parse all values :-(", "Illegal value format", JOptionPane.ERROR_MESSAGE);
+						//} else {
+							try {
+								p.initKernel(epsilon, points);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ParserConfigurationException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (SAXException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							JComponent plot = new ClassifierPanel(p.getKernel().getClassifier());
+							//plot.add(new JLabel("Title"));
+							clust_tab.add(plot);
+							clust_tab.revalidate();
+							clust_tab.repaint();
+						//}
+					}
+				});
+				clust_toolbar.add(btn_clustering);
 				//clust_toolbar.
 			clust_tab.add(clust_toolbar);
-			clust_tab.add(new ClassifierPanel(p.getKernel().getClassifier()));
 		tbp.addTab("Clustering", clust_tab);
 
 		/* AMOS II TAB */
