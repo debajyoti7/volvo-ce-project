@@ -7,15 +7,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
-
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import core.CBRProject;
 import core.CBRController;
-
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -143,7 +139,7 @@ public class AwesomeCBR extends JFrame {
 		h1.setMnemonic('A');
 		h1.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ae) {
-		    	JOptionPane.showMessageDialog(null,"AwesomeCBR v1\n2013, Malardalen University");
+		    	JOptionPane.showMessageDialog(null,"AwesomeCBR v1\n2013, Mälardalens högskola");
 		    }
 		});
 			
@@ -162,10 +158,12 @@ public class AwesomeCBR extends JFrame {
 			// selection changed
 			public void valueChanged(ListSelectionEvent arg0) {
 				if(!AwesomeCBR.this.disable_listeners && controller.getProjects().size() != 0) {
+					int selected_index = list_projects.getSelectedIndex();
 					for(Component c : projects_area.getComponents()) {
 						c.setVisible(false);
 					}
-					project_view_lst.get(list_projects.getSelectedIndex()).setVisible(true);
+					project_view_lst.get(selected_index).setVisible(true);
+					setTitle("AwesomeCBR - " + controller.getProjectNames().get(selected_index));
 				}
 			}
 		});

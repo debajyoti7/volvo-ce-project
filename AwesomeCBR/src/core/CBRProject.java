@@ -2,10 +2,15 @@ package core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.math3.ml.clustering.DoublePoint;
 import org.xml.sax.SAXException;
+
+import xml.Utils;
 
 import cbr.Kernel;
 import cbr.KernelIF;
@@ -21,8 +26,9 @@ public class CBRProject {
 		//kernel = new Kernel(new File(url), 0.0, 1);
 	}
 	
-	public void initKernel(double arg0, int arg1) throws IOException, ParserConfigurationException, SAXException {
-		kernel = new Kernel(new File(url), arg0, arg1);
+	public void initKernel(double eps, int minPts) throws IOException, ParserConfigurationException, SAXException {
+		Set<DoublePoint> dataPoints = Utils.populateFromXmlFile(new File(url), new HashSet<DoublePoint>());
+		kernel = new Kernel(dataPoints, eps, minPts);
 	}
 	
 	public String getName() {

@@ -8,12 +8,24 @@ import javax.swing.JFrame;
 import org.apache.commons.math3.ml.clustering.*;
 import org.math.plot.Plot2DPanel;
 
+/**
+ * Classifies cases via a clustering algorithm and a Naive Bayesian algorithm.
+ * <p>
+ * Refer to the actual member methods for a more detailed documentation 
+ * of how to use this class.
+ */
 public class NaiveBayesClassifier {
 
 	private final Set<DoublePoint> dataPoints;
 	private Set<DoublePoint> noise;
 	private final List<NaiveBayesCluster> clusters = new ArrayList<>();
 	
+	/**
+	 * Creates a NaiveBayesClassifier from the given parameters.
+	 * 
+	 * @param clusterer the clustering strategy to use
+	 * @param dataPoints the cases to be classified
+	 */
 	public NaiveBayesClassifier(Clusterer<DoublePoint> clusterer, Collection<DoublePoint> dataPoints) {
 		this.dataPoints = Collections.unmodifiableSet(new HashSet<>(dataPoints));
 		this.noise = new HashSet<>(dataPoints);
@@ -29,17 +41,23 @@ public class NaiveBayesClassifier {
 		noise = Collections.unmodifiableSet(noise);
 	}
 	
+	/**
+	 * Returns the formed (via the given clustering algorithm) clusters.
+	 */
 	public List<NaiveBayesCluster> clusters() {
 		return clusters;
 	}
 	
 	/**
-	 * Returns an unmodifiable view of the data points used by this classifier.
+	 * Returns an unmodifiable view of the cases used by this classifier.
 	 */
 	public Set<DoublePoint> dataPoints() {
 		return dataPoints;
 	}
 	
+	/**
+	 * The non clustered cases.
+	 */
 	public Set<DoublePoint> noise() {
 		return noise;
 	}
@@ -68,6 +86,11 @@ public class NaiveBayesClassifier {
 		return result;
 	}
 	
+	/**
+	 * Calculates the conditional class probability for every cluster.
+	 * @param dataPoint the target case
+	 * @return same dimension as the number of clusters 
+	 */
 	public double[] conditionalClassProbability(DoublePoint dataPoint) {
 		double[] result = new double[clusters().size()];
 		
@@ -84,6 +107,10 @@ public class NaiveBayesClassifier {
 		return result;
 	}
 	
+	/**
+	 * Should only be used for test purposes
+	 * @param args not used
+	 */
 	public static void main(String[] args) {
 		
 		final Random RANDOM = new Random();
