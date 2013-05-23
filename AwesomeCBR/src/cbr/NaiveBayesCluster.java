@@ -87,6 +87,8 @@ public class NaiveBayesCluster extends Cluster<DoublePoint> {
 	 * <pre>
 	 * &#8719 = [ ( p(x1|c) * p(x2|c) * ... * p(xK|c) ) * p(c) ] 
 	 * </pre>
+	 * <p>
+	 * Calculations are performed via sum of log to not loose number precision.
 	 * 
 	 * @param dp the given case
 	 * @param totalClusteredDataPoints 
@@ -96,12 +98,12 @@ public class NaiveBayesCluster extends Cluster<DoublePoint> {
 	public double conditionalProbability(DoublePoint dp, int totalClusteredDataPoints) {
 		
 		// calculate the product of all conditional probabilities for every feature
-		double result = conditionalFeatureProbability(dp, 0);
+		double sum = conditionalFeatureProbability(dp, 0);
 		for (int i = 1; i < dp.getPoint().length; i++) {
-			result *= conditionalFeatureProbability(dp, i); 
+			sum += Math.log(conditionalFeatureProbability(dp, i));
 		}
 		
 		// multiply by the cluster probability (omitting the not classified noise data points)
-		return result * ( (double)getPoints().size() / totalClusteredDataPoints );
+		return Math.pow(Math.E, sum) * ( (double)getPoints().size() / totalClusteredDataPoints );
 	}
 }

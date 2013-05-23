@@ -3,7 +3,11 @@ package xml;
 import java.io.*;
 import java.util.*;
 
+import org.apache.commons.math3.ml.clustering.DBSCANClusterer;
 import org.apache.commons.math3.ml.clustering.DoublePoint;
+
+import cbr.NaiveBayesClassifier;
+import cbr.NaiveBayesCluster;
 
 public class XmlReader {
 
@@ -26,13 +30,32 @@ public class XmlReader {
 		}	
 		System.out.println(dataPoints.size() + " number of feature vectors read");
 		
-		write(new File("data.csv"), dataPoints);
+//		write(new File("data.csv"), dataPoints);
 		
 		List<DoublePoint> filtered = new ArrayList<>();
 		for (DoublePoint doublePoint : dataPoints) {
 			filtered.add(new DoublePoint(filter(doublePoint.getPoint(), 5)));
 		}
-		write(new File("filtered.csv"), filtered);
+//		write(new File("filtered.csv"), filtered);
+		
+		DBSCANClusterer<DoublePoint> dbScan = new DBSCANClusterer<>(3.5, 3);
+		
+		NaiveBayesClassifier classifier = new NaiveBayesClassifier(dbScan, filtered);
+		System.out.println("Number of clusters: " + classifier.clusters().size());
+		System.out.println("Number of noise: " + classifier.noise().size());
+		
+		double probabilitySum = 0.0;
+		for (DoublePoint doublePoint : filtered) {
+			double classifiedDataPoint = classifier.caseProbability(doublePoint);
+			System.out.println(classifiedDataPoint);
+			probabilitySum += classifiedDataPoint;
+		}
+		System.out.println("probabilitySum: " + probabilitySum);
+//		DBSCANClusterer<DoublePoint> dbScan = new DBSCANClusterer<>(0.5, 3);
+//		
+//		NaiveBayesCluster clusterer = new NaiveBayesCluster(1, dbScan);
+//		System.out.println("Number of clusters: " + clusterer.getPoints().size());
+//		NaiveBayesClassifier nbc = new NaiveBayesClassifier(clusterer, dataPoints)
 	}
 
 	private static void read(File dir, List<DoublePoint> dataPoints) throws IOException {
