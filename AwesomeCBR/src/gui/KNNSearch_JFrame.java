@@ -1,15 +1,18 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Locale;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +25,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
+import org.apache.commons.math3.ml.clustering.DoublePoint;
+
 import core.CBRProject;
 
 public class KNNSearch_JFrame extends JFrame {
@@ -30,7 +35,7 @@ public class KNNSearch_JFrame extends JFrame {
 	
 	public KNNSearch_JFrame() {}
 	
-	public void setVisible(final JFrame parent, final CBRProject project) {
+	public void setVisible(final JFrame parent, final CBRProject project, final JComponent plot) {
 		JPanel contentPane = new JPanel();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		setContentPane(contentPane);
@@ -78,7 +83,11 @@ public class KNNSearch_JFrame extends JFrame {
 				}
 				try {
 					//JOptionPane.showMessageDialog(KNNSearch_JFrame.this, "To teh kernel!! " + Arrays.toString(values));
-					project.getKernel().kNNQuery((Integer)kSpinner.getValue(), values);
+					List<DoublePoint> result = project.getKernel().kNNQuery((Integer)kSpinner.getValue(), values);
+					if (plot instanceof ClassifierPanel) {
+						ClassifierPanel cp = (ClassifierPanel)plot;
+						cp.plot("kNN search", Color.ORANGE, result);
+					}
 					setVisible(false);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(parent, ex.toString(), "Exception occured?!", JOptionPane.ERROR_MESSAGE);

@@ -5,18 +5,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -52,8 +48,8 @@ public class CBRProject_View extends JPanel {
 	private boolean database_modified = false;
 	private final JButton btn_disconnect = new JButton("");
 	private final JButton btn_connect = new JButton("");
-	private DefaultListModel<String> history_listModel = new DefaultListModel<String>();
-	private JList<String> history = new JList<String>(history_listModel);
+//	private DefaultListModel<String> history_listModel = new DefaultListModel<String>();
+//	private JList<String> history = new JList<String>(history_listModel);
 	private JComponent plot = new Default_JPanel(BoxLayout.X_AXIS);
 	
 	public JTabbedPane tbp = new JTabbedPane();
@@ -89,6 +85,7 @@ public class CBRProject_View extends JPanel {
 
 		/* PLOT TAB */
 		//tbp.addTab("Plot", pnl_query);
+
 		final JComponent clust_tab = new Default_JPanel(BoxLayout.Y_AXIS);
 			JComponent clust_toolbar = new Default_JPanel(BoxLayout.X_AXIS);
 			clust_toolbar.setBorder(BorderFactory.createTitledBorder("Clustering parameters"));
@@ -106,7 +103,7 @@ public class CBRProject_View extends JPanel {
 				clust_toolbar.add(kSpinner);
 				clust_toolbar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
 				
-				JButton btn_clustering = new JButton("Do clustering");
+				JButton btn_clustering = new JButton("Cluster");
 				btn_clustering.setFont(Settings.font_normal);
 				btn_clustering.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
@@ -131,7 +128,7 @@ public class CBRProject_View extends JPanel {
 				btn_query.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						//if(project.getKernel() != null && project.getKernel().getAttributeNames() != null) {
-						frame_query.setVisible(pFrame, project);
+						frame_query.setVisible(pFrame, project, plot);
 						//}
 						//else {
 						//JOptionPane.showMessageDialog(pFrame, "No attributes are specified.");
@@ -188,8 +185,6 @@ public class CBRProject_View extends JPanel {
 					textField1.setEnabled(false);
 
 					amosDisconnect();
-					
-					history_listModel.clear();
 				}
 			}
 		});
@@ -212,7 +207,7 @@ public class CBRProject_View extends JPanel {
 						database_modified = true;
 						status_textarea.append(textField1.getText()+"\n");
 						connector.execute(textField1.getText());
-						historyAdd(textField1.getText());
+//						historyAdd(textField1.getText());
 						textField1.setText("");
 					}
 					catch(Exception ex) {
@@ -242,37 +237,35 @@ public class CBRProject_View extends JPanel {
 		tp.add(pnl_amos_2);
 		pnl_amos.add(tp);
 		
-		JScrollPane history_sp = new JScrollPane();
-		history_sp.setMinimumSize(new Dimension(150, Integer.MAX_VALUE));
-		//history_sp.setMaximumSize(new Dimension(150, Integer.MAX_VALUE));
-		history_sp.setPreferredSize(new Dimension(150, 150));
-		history_sp.setViewportView(history);
-		history_sp.setBorder(BorderFactory.createTitledBorder("Cmd History"));
-		history_sp.setBackground(Color.WHITE);
+		//JComponent skata = new Default_JPanel(BoxLayout.X_AXIS);
+//		JScrollPane history_sp = new JScrollPane();
+//		history_sp.setViewportView(history);
+//		history_sp.setBorder(BorderFactory.createTitledBorder("Cmd History"));
+//		history_sp.setBackground(Color.WHITE);
+//		
+//		history.addMouseListener(new MouseAdapter() {
+//		    public void mouseClicked(MouseEvent evt) {
+//		        @SuppressWarnings("rawtypes")
+//				JList list = (JList)evt.getSource();
+//		        if (evt.getClickCount() > 1) {
+//		            //int index = list.locationToIndex(evt.getPoint());
+//		        	if(list.getModel().getSize() > 0) {
+//		        		status_textarea.append(list.getSelectedValue().toString()+"\n");
+//		        		connector.execute(list.getSelectedValue().toString());
+//		        	}
+//		        }
+//		    }
+//		});
 		
-		history.addMouseListener(new MouseAdapter() {
-		    public void mouseClicked(MouseEvent evt) {
-		        @SuppressWarnings("rawtypes")
-				JList list = (JList)evt.getSource();
-		        if (evt.getClickCount() > 1) {
-		        	if(list.getModel().getSize() > 0) {
-		        		status_textarea.append(list.getSelectedValue().toString()+"\n");
-		        		connector.execute(list.getSelectedValue().toString());
-		        	}
-		        }
-		    }
-		});
-		
-		// Almost working history.
-		//pnl_amos.add(history_sp);
+//		pnl_amos.add(history_sp);
 		
 		status_panel.add(tbp);
 		add(status_panel);
 	}
 	
-	private void historyAdd(String cmd) {
-		history_listModel.addElement(cmd);
-	}
+//	private void historyAdd(String cmd) {
+//		history_listModel.addElement(cmd);
+//	}
 
 	public void amosDisconnect() {
 		connector.doStop();

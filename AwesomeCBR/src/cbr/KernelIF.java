@@ -4,10 +4,16 @@ import java.util.List;
 
 import org.apache.commons.math3.ml.clustering.DoublePoint;
 
+/**
+ * Interface for case clustering and probability classification.
+ * 
+ * @see <a href="http://en.wikipedia.org/wiki/DBSCAN">DBSCAN on Wikipedia</a>
+ * @see <a href="http://en.wikipedia.org/wiki/M-tree">M-tree on Wikipedia</a> 
+ */
 public interface KernelIF {
 
 	/**
-	 * Returns the names of the attributes Initializes the kernel from the given file of data points.  
+	 * Returns the names of the attributes Initializes the kernel from the given file of cases.  
 	 */
 	String[] getAttributeNames();
 	
