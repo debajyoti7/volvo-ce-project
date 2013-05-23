@@ -2,34 +2,46 @@ package cbr;
 
 import org.apache.commons.math3.ml.clustering.*;
 
+/**
+ * Encapsulates a cluster of cases 
+ */
 @SuppressWarnings("serial")
 public class NaiveBayesCluster extends Cluster<DoublePoint> {
 	
-	//private static int counter = 0;
-	private final int ordinal;
-	
+
+	private final int ordinal;	
 	private final double[] mean;
 	private final double[] variance;
 	
-//	private final double probability;
+//	public double[] mean() { 
+//		return mean; 
+//	}
+//	
+//	public double[] variance() { 
+//		return variance;
+//	}
 	
-	public double[] mean() { 
-		return mean; 
-	}
-	
-	public double[] variance() { 
-		return variance;
-	}
-	
+	/**
+	 * Returns the name of the Naive Bayes cluster. 
+	 */
 	public String name() {
 		return "Cluster" + ordinal;
 	}
 	
+	/**
+	 * Might be used as an identification for this cluster.
+	 */
 	public int ordinal() {
 		return ordinal;
 	}
 	
-	public NaiveBayesCluster(int ordinal, Cluster<DoublePoint> cluster) {
+	/**
+	 * Creates a NaiveBayesCluster.
+	 * 
+	 * @param ordinal must be unique
+	 * @param cluster cluster to base this on
+	 */
+	NaiveBayesCluster(int ordinal, Cluster<DoublePoint> cluster) {
 		this.ordinal = ordinal;
 		//probability = (double)cluster.getPoints().size() / totalNumberOfDataPoints;
 		
@@ -69,10 +81,6 @@ public class NaiveBayesCluster extends Cluster<DoublePoint> {
 		}
 	}
 	
-//	double probability() {
-//		return probability;
-//	}
-	
 	private double conditionalFeatureProbability(DoublePoint dp, int index) {
 		double denominator = Math.sqrt(2 * Math.PI) * Math.sqrt( variance[index] );
 		
@@ -93,8 +101,7 @@ public class NaiveBayesCluster extends Cluster<DoublePoint> {
 	 * @param dp the given case
 	 * @param totalClusteredDataPoints 
 	 * 			the total number of data points (<em>omitting</em> noise data!)
-	 */
-	// TODO use sum of log instead of multiplication 
+	 */ 
 	public double conditionalProbability(DoublePoint dp, int totalClusteredDataPoints) {
 		
 		// calculate the product of all conditional probabilities for every feature

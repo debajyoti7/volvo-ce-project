@@ -101,11 +101,11 @@ public class XmlData {
         
         populate(doc.getChildNodes());
         
-        System.out.println(datalog);
-        System.out.println(program);
-        System.out.println(run);
-        for (Sample sample : samples)
-        	System.out.println(sample.toString());
+//        System.out.println(datalog);
+//        System.out.println(program);
+//        System.out.println(run);
+//        for (Sample sample : samples)
+//        	System.out.println(sample.toString());
 	}
 	
 	public Map<Datalog, String> getDatalogAttributes() { return datalog; }
