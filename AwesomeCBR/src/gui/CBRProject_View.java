@@ -20,20 +20,18 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import core.CBRProject;
 import core.AmosProcessBuilder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import javax.swing.JTextPane;
 
 @SuppressWarnings("serial")
-public class CBRProject_View_JPanel extends JPanel {
+public class CBRProject_View extends JPanel {
 	//private JTextField textField2 = new JTextField();
-	private JTextField textField1 = new JTextField();
+	private JTextField textField1 = new JTextField(20);
 	//private JButton btn_query = new JButton("kNN Search");
 	//private KNNSearch_JFrame frame_query = new KNNSearch_JFrame();
 	private JTextArea status_textarea = new JTextArea();
@@ -43,10 +41,11 @@ public class CBRProject_View_JPanel extends JPanel {
 	private boolean database_modified = false;
 	private final JButton btn_disconnect = new JButton("");
 	private final JButton btn_connect = new JButton("");
+	private JComponent plot = new Default_JPanel(BoxLayout.X_AXIS);
 	
 	public JTabbedPane tbp = new JTabbedPane();
 
-	public CBRProject_View_JPanel(final CBRProject p, final JFrame pFrame) {
+	public CBRProject_View(final CBRProject p, final JFrame pFrame) {
 		project = p;
 		connector = new AmosProcessBuilder(status_textarea);
 
@@ -55,6 +54,9 @@ public class CBRProject_View_JPanel extends JPanel {
 
 		Default_JPanel up = new Default_JPanel(BoxLayout.Y_AXIS);
 		JPanel u1 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) u1.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		u1.setBackground(Color.WHITE);
 		JLabel title = new JLabel(p.getName() + " :: " + p.getURL());
 		title.setMaximumSize(new Dimension(Integer.MAX_VALUE, Settings.JTextField_height));
 		title.setFont(new Font("Verdana", Font.BOLD, 14));
@@ -111,15 +113,15 @@ public class CBRProject_View_JPanel extends JPanel {
 		//tbp.addTab("Plot", pnl_query);
 		final JComponent clust_tab = new Default_JPanel(BoxLayout.Y_AXIS);
 			JComponent clust_toolbar = new Default_JPanel(BoxLayout.X_AXIS);
-			//clust_toolbar.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-				clust_toolbar.add(new JLabel("Epsilon:"));
-				final JTextField epsilon_text = new JTextField();
-				epsilon_text.setMaximumSize(new Dimension(Integer.MAX_VALUE, Settings.JTextField_height));
+			clust_toolbar.setBorder(BorderFactory.createTitledBorder("Clustering parameters"));
+				clust_toolbar.add(new JLabel("Epsilon: "));
+				final JTextField epsilon_text = new JTextField("0.8");
+				epsilon_text.setMaximumSize(new Dimension(100, Settings.JTextField_height));
 				clust_toolbar.add(epsilon_text);
 				
-				clust_toolbar.add(new JLabel("   minPts:"));
-				final JTextField pts_text = new JTextField();
-				pts_text.setMaximumSize(new Dimension(Integer.MAX_VALUE, Settings.JTextField_height));
+				clust_toolbar.add(new JLabel("   minPts: "));
+				final JTextField pts_text = new JTextField("4");
+				pts_text.setMaximumSize(new Dimension(100, Settings.JTextField_height));
 				clust_toolbar.add(pts_text);
 				
 				JButton btn_clustering = new JButton("Do clustering");
@@ -128,39 +130,27 @@ public class CBRProject_View_JPanel extends JPanel {
 						double epsilon = Double.parseDouble(epsilon_text.getText());
 						int points = Integer.parseInt(pts_text.getText());
 						
-						//if() {
-							//JOptionPane.showMessageDialog(CBRProject_View_JPanel.this, "Couldn't parse all values :-(", "Illegal value format", JOptionPane.ERROR_MESSAGE);
-						//} else {
-							try {
-								p.initKernel(epsilon, points);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (ParserConfigurationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (SAXException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							JComponent plot = new ClassifierPanel(p.getKernel().getClassifier());
-							//plot.add(new JLabel("Title"));
+						try {
+							p.initKernel(epsilon, points);
+							clust_tab.remove(plot);
+							plot = new ClassifierPanel(p.getKernel().getClassifier());
 							clust_tab.add(plot);
 							clust_tab.revalidate();
 							clust_tab.repaint();
-						//}
+						} catch (Exception e) { e.printStackTrace(); }
 					}
 				});
 				clust_toolbar.add(btn_clustering);
-				//clust_toolbar.
 			clust_tab.add(clust_toolbar);
+			clust_tab.add(plot);
 		tbp.addTab("Clustering", clust_tab);
 
 		/* AMOS II TAB */
 		JComponent pnl_amos = new Default_JPanel(BoxLayout.Y_AXIS);
+		tbp.addTab("AmosII", pnl_amos);
+		
 		JComponent button_bar = new Default_JPanel(BoxLayout.X_AXIS);
-		//btn_connect.setBorder(BorderFactory.createEmptyBorder());
-		//btn_connect.setBorderPainted(false);
+		button_bar.setBackground(Color.WHITE);
 		btn_connect.setToolTipText("Connect to AMOS");
 		ImageIcon image = new ImageIcon("graphics/database-check-icon.png");
 		btn_connect.setIcon(image);
@@ -204,14 +194,11 @@ public class CBRProject_View_JPanel extends JPanel {
 		});
 		button_bar.add(btn_disconnect);
 
-		JPanel spacer = new JPanel();
-		spacer.setBackground(Color.WHITE);
-		button_bar.add(spacer);
 		pnl_amos.add(button_bar);
-		tbp.addTab("AmosII", pnl_amos);
-
+		
 		JComponent pnl_amos_1 = new Default_JPanel(BoxLayout.X_AXIS);
-		pnl_amos.add(pnl_amos_1);
+		button_bar.add(pnl_amos_1);
+		//pnl_amos.add(pnl_amos_1);
 		JLabel pnl_amos_lbl1 = new JLabel("Command: ");
 		pnl_amos_1.add(pnl_amos_lbl1);
 		textField1.setEnabled(false);
@@ -227,34 +214,31 @@ public class CBRProject_View_JPanel extends JPanel {
 						textField1.setText("");
 					}
 					catch(Exception ex) {
-						CBRProject_View_JPanel.this.status_textarea.setText("Exception ::" + ex.getMessage());
+						CBRProject_View.this.status_textarea.setText("Exception ::" + ex.getMessage());
 					}
 				}
 			}
 		});
 		pnl_amos_1.add(textField1);
-		pnl_amos_1.setMinimumSize(new Dimension(1, Settings.JTextField_height + Settings.border_size));
-		pnl_amos_1.setMaximumSize(new Dimension(Integer.MAX_VALUE, Settings.JTextField_height + Settings.border_size));
+		textField1.setMaximumSize(new Dimension(Integer.MAX_VALUE, Settings.JTextField_height));
 
+		// Amos Text area
 		Default_JPanel pnl_amos_2 = new Default_JPanel(BoxLayout.X_AXIS);
 		JScrollPane sp = new JScrollPane();
 		sp.setMinimumSize(new Dimension(1, 1));
 		sp.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
-
 		sp.setViewportView(status_textarea);
+		
 		status_textarea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		status_textarea.setEditable(false);
 		status_textarea.setText("");
 		status_textarea.setFont(Settings.font_normal);
 		pnl_amos_2.add(sp);
 		pnl_amos.add(pnl_amos_2);
+		
+		// Add tabbedpane
 		status_panel.add(tbp);
 		add(status_panel);
-		
-		
-		/* Console */
-		JComponent con = new Default_JPanel(BoxLayout.Y_AXIS);
-		tbp.addTab("Console", con);
 	}
 
 	public void amosDisconnect() {
