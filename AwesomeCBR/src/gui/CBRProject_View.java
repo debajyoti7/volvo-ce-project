@@ -1,14 +1,12 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -38,9 +36,6 @@ import java.awt.FlowLayout;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
@@ -257,15 +252,14 @@ public class CBRProject_View extends JPanel {
 		
 		history.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
-		        JList list = (JList)evt.getSource();
-		        if (evt.getClickCount() == 2) {
+		        @SuppressWarnings("rawtypes")
+				JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() > 1) {
 		            //int index = list.locationToIndex(evt.getPoint());
 		        	if(list.getModel().getSize() > 0) {
+		        		status_textarea.append(list.getSelectedValue().toString()+"\n");
 		        		connector.execute(list.getSelectedValue().toString());
 		        	}
-		        }
-		        else if (evt.getClickCount() == 3) {   // Triple-click
-		            int index = list.locationToIndex(evt.getPoint());
 		        }
 		    }
 		});
