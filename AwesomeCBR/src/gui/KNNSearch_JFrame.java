@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.util.Arrays;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -73,7 +71,7 @@ public class KNNSearch_JFrame extends JFrame {
 					}	
 				}
 				try {
-					JOptionPane.showMessageDialog(KNNSearch_JFrame.this, "To teh kernel!! " + Arrays.toString(values));
+					//JOptionPane.showMessageDialog(KNNSearch_JFrame.this, "To teh kernel!! " + Arrays.toString(values));
 					project.getKernel().kNNQuery((Integer)kSpinner.getValue(), values);
 					setVisible(false);
 				} catch (Exception ex) {

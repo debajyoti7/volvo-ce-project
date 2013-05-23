@@ -5,22 +5,21 @@ import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-public class CBRControler {
+public class CBRController {
 	
 	private final Preferences prefRoot;
-	
 	private List<CBRProject> projects;
 	
-	public CBRControler() {
+	public CBRController() {
 		this.projects = new ArrayList<CBRProject>();
-		this.prefRoot = Preferences.userNodeForPackage(CBRControler.class);
+		this.prefRoot = Preferences.userNodeForPackage(CBRController.class);
 		
 		// Read project data from registry.
 		try {
 			String[] projectNames = prefRoot.childrenNames();
 			for (String pName : projectNames) {
 				try {
-					projects.add(new CBRProject(pName, prefRoot.node(pName).get("url", "FuckedUpHeavily!")));
+					projects.add(new CBRProject(pName, prefRoot.node(pName).get("url", "Registry error.")));
 				} catch (Exception e) {
 					// The user probably deleted the resource
 					prefRoot.node(pName);
