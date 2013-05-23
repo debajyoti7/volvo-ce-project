@@ -7,11 +7,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import core.CBRProject;
-import core.CBRControler;
+import core.CBRController;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -21,6 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import java.awt.Dimension;
 import javax.swing.event.ListSelectionListener;
@@ -42,13 +45,11 @@ import java.util.Locale;
  */
 @SuppressWarnings("serial")
 public class AwesomeCBR extends JFrame {
-	private CBRControler pm;
-	private List<CBRProject_View_JPanel> ppanels = new ArrayList<CBRProject_View_JPanel>();
+	private CBRController controller;
+	private List<CBRProject_View> project_view_lst = new ArrayList<CBRProject_View>();
 	private Boolean disable_listeners = false;
 	//private JSplitPane splitPaneLR;
 	private JScrollPane scrollPane;
-	private JPanel contentPane;
-	private JPanel panel_main;
 	private JPanel projects_area = new Default_JPanel(BoxLayout.Y_AXIS);
 	private JList<String> list_projects;	
 	private JMenuItem f1, f3;
@@ -82,10 +83,11 @@ public class AwesomeCBR extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);	// Centers on screen
 		
-		contentPane = new JPanel();
-		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+		JPanel contentPane = new JPanel();
+		contentPane.setLayout(new BorderLayout(5, 5));
 		setContentPane(contentPane);
 		
+		/* Menu bar */
 		JMenuBar bar = new JMenuBar();
 		JMenu file = new JMenu("Project");
 		file.setMnemonic('P');
@@ -93,17 +95,17 @@ public class AwesomeCBR extends JFrame {
 		f1.setMnemonic('N');
 		f1.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ae) {
-		    	CBRProject_Create_JDialog np = new CBRProject_Create_JDialog(AwesomeCBR.this, AwesomeCBR.this.pm.getProjectNames(), "Awsome CBR - Add new project", null);
+		    	CBRProject_Create_JDialog np = new CBRProject_Create_JDialog(AwesomeCBR.this, AwesomeCBR.this.controller.getProjectNames(), "Awsome CBR - Add new project", null);
 				np.setLocationRelativeTo(AwesomeCBR.this);
 				np.setVisible(true);
 				
 				if(np.isValidated()) {
 					try {
 						CBRProject p = new CBRProject(np.getProjectName(), np.getURL());
-						pm.add(p);
+						controller.add(p);
 						
 						// To selecte the newly created project.
-						refreshView(pm.getProjectNames().indexOf(np.getProjectName()));
+						refreshView(controller.getProjectNames().indexOf(np.getProjectName()));
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(
 								AwesomeCBR.this, 
@@ -123,8 +125,8 @@ public class AwesomeCBR extends JFrame {
 		    public void actionPerformed(ActionEvent ae) {
 		    	int n = JOptionPane.showConfirmDialog(null, "Are you sure?", "Delete confirmation", JOptionPane.YES_NO_OPTION);
 				if(n == JOptionPane.YES_OPTION) {
-					ppanels.get(list_projects.getSelectedIndex()).amosDisconnect();
-					pm.remove(list_projects.getSelectedValue().toString());
+					project_view_lst.get(list_projects.getSelectedIndex()).amosDisconnect();
+					controller.remove(list_projects.getSelectedValue().toString());
 					refreshView(0);
 				}
 		    }
@@ -141,78 +143,79 @@ public class AwesomeCBR extends JFrame {
 		h1.setMnemonic('A');
 		h1.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ae) {
-		    	// TODO
+		    	JOptionPane.showMessageDialog(null,"AwesomeCBR v1\n2013, Malardalen University");
 		    }
 		});
 			
 		setJMenuBar(bar);
 		
-		panel_main = new Default_JPanel(BoxLayout.X_AXIS);
-		//panel_main.setLayout(new BorderLayout(0,0));
+		/* Main area panel */		
+		JComponent panel_main = new Default_JPanel(BoxLayout.X_AXIS);
 		
-		JComponent list_panel = new JPanel();
-		list_panel.setBackground(Color.WHITE);
-		list_panel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-		list_panel.setMinimumSize(new Dimension(300, Integer.MAX_VALUE));
+		projects_area.setMinimumSize(new Dimension(0, 0));
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setMinimumSize(new Dimension(150, 1));
-		scrollPane.setMaximumSize(new Dimension(150, Integer.MAX_VALUE));
 		scrollPane.setPreferredSize(new Dimension(150, Integer.MAX_VALUE));
-		
 		list_projects = new JList<String>();
+		list_projects.setFont(Settings.font_normal);
 		list_projects.addListSelectionListener(new ListSelectionListener() {
 			// selection changed
 			public void valueChanged(ListSelectionEvent arg0) {
-				int sIndex = list_projects.getSelectedIndex();
-				if(!AwesomeCBR.this.disable_listeners) {
+				if(!AwesomeCBR.this.disable_listeners && controller.getProjects().size() != 0) {
 					for(Component c : projects_area.getComponents()) {
 						c.setVisible(false);
 					}
-					ppanels.get(sIndex).setVisible(true);
-					setTitle("AwesomeCBR - "+pm.getProjects().get(sIndex).getName());
+					project_view_lst.get(list_projects.getSelectedIndex()).setVisible(true);
 				}
 			}
 		});
 		scrollPane.setViewportView(list_projects);
-		/*list_panel.add(list_projects);
-		list_panel.setMinimumSize(new Dimension(150, Integer.MAX_VALUE));
-		list_panel.setMaximumSize(new Dimension(150, Integer.MAX_VALUE));*/
-		//list_panel.setPreferredSize(new Dimension(150, Integer.MAX_VALUE));
-		
+	
 		//projects_area.setLayout(new BoxLayout(projects_area, BoxLayout.Y_AXIS));
 		
-		//JComponent jc = new Default_JPanel(BoxLayout.X_AXIS);
-		//jc.setBackground(Color.RED);
-		//jc.add(list_panel);
-		//jc.add(projects_area);
+		JSplitPane splitPaneLR = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, projects_area);
+		splitPaneLR.setResizeWeight(0.1);
 		
-		panel_main.add(scrollPane);
-		panel_main.add(projects_area);
-		panel_main.setBackground(Color.BLUE);
+		/* Console */
+		JComponent console = new Default_JPanel(BoxLayout.Y_AXIS);
+		JScrollPane scrollpane3 = new JScrollPane();
+		JTextPane consolePane = new JTextPane();
+
+		MessageConsole mc = new MessageConsole(consolePane);
+		mc.redirectErr(Color.RED, System.err);
+		mc.redirectOut(Color.BLACK, System.out);
 		
-		contentPane.add(panel_main);
+		scrollpane3.setViewportView(consolePane);
+		console.add(scrollpane3);
 		
-		pm = new CBRControler();
+		panel_main.add(splitPaneLR);
+		
+		JSplitPane splitPaneUD = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panel_main, console);
+		splitPaneUD.setResizeWeight(0.8);
+		contentPane.add(splitPaneUD);
+		
+		controller = new CBRController();
 		refreshView(0);		
 	}
 	
 	private void refreshView(int selected_index) {
 		// Refresh projects.
 		
-		if(AwesomeCBR.this.pm.getProjects().size() > 0) {
+		if(AwesomeCBR.this.controller.getProjects().size() > 0) {
 			disable_listeners = true;
-			list_projects.setListData(AwesomeCBR.this.pm.getProjectNames().toArray(new String[AwesomeCBR.this.pm.getProjectNames().size()]));
+			list_projects.setListData(AwesomeCBR.this.controller.getProjectNames().toArray(new String[AwesomeCBR.this.controller.getProjectNames().size()]));
 			disable_listeners = false;
 			
-			for(CBRProject p : pm.getProjects()) {
-				CBRProject_View_JPanel tmp = new CBRProject_View_JPanel(p, AwesomeCBR.this);
-				ppanels.add(tmp);
+			project_view_lst.clear();
+			projects_area.removeAll();
+			for(CBRProject p : controller.getProjects()) {
+				CBRProject_View tmp = new CBRProject_View(p, AwesomeCBR.this);
+				project_view_lst.add(tmp);
 				projects_area.add(tmp);
 			}
 			
 			list_projects.setSelectedIndex(selected_index);
-			ppanels.get(selected_index).setVisible(true);
+			project_view_lst.get(selected_index).setVisible(true);
 			
 			f3.setEnabled(true);
 		}
@@ -220,7 +223,7 @@ public class AwesomeCBR extends JFrame {
 			disable_listeners = true;
 			list_projects.setListData(new String[] {""});
 			disable_listeners = false;
-			ppanels.clear();
+			project_view_lst.clear();
 			setTitle("AwesomeCBR");
 			
 			projects_area.removeAll();

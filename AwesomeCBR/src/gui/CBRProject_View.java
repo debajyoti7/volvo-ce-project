@@ -29,7 +29,7 @@ import java.awt.FlowLayout;
 import javax.swing.JTextPane;
 
 @SuppressWarnings("serial")
-public class CBRProject_View_JPanel extends JPanel {
+public class CBRProject_View extends JPanel {
 	//private JTextField textField2 = new JTextField();
 	private JTextField textField1 = new JTextField(20);
 	//private JButton btn_query = new JButton("kNN Search");
@@ -45,7 +45,7 @@ public class CBRProject_View_JPanel extends JPanel {
 	
 	public JTabbedPane tbp = new JTabbedPane();
 
-	public CBRProject_View_JPanel(final CBRProject p, final JFrame pFrame) {
+	public CBRProject_View(final CBRProject p, final JFrame pFrame) {
 		project = p;
 		connector = new AmosProcessBuilder(status_textarea);
 
@@ -114,13 +114,13 @@ public class CBRProject_View_JPanel extends JPanel {
 		final JComponent clust_tab = new Default_JPanel(BoxLayout.Y_AXIS);
 			JComponent clust_toolbar = new Default_JPanel(BoxLayout.X_AXIS);
 			clust_toolbar.setBorder(BorderFactory.createTitledBorder("Clustering parameters"));
-				clust_toolbar.add(new JLabel("Epsilon:"));
-				final JTextField epsilon_text = new JTextField();
+				clust_toolbar.add(new JLabel("Epsilon: "));
+				final JTextField epsilon_text = new JTextField("0.8");
 				epsilon_text.setMaximumSize(new Dimension(100, Settings.JTextField_height));
 				clust_toolbar.add(epsilon_text);
 				
-				clust_toolbar.add(new JLabel("   minPts:"));
-				final JTextField pts_text = new JTextField();
+				clust_toolbar.add(new JLabel("   minPts: "));
+				final JTextField pts_text = new JTextField("4");
 				pts_text.setMaximumSize(new Dimension(100, Settings.JTextField_height));
 				clust_toolbar.add(pts_text);
 				
@@ -147,7 +147,10 @@ public class CBRProject_View_JPanel extends JPanel {
 
 		/* AMOS II TAB */
 		JComponent pnl_amos = new Default_JPanel(BoxLayout.Y_AXIS);
-		JComponent button_bar = new JPanel();
+		tbp.addTab("AmosII", pnl_amos);
+		
+		JComponent button_bar = new Default_JPanel(BoxLayout.X_AXIS);
+		button_bar.setBackground(Color.WHITE);
 		btn_connect.setToolTipText("Connect to AMOS");
 		ImageIcon image = new ImageIcon("graphics/database-check-icon.png");
 		btn_connect.setIcon(image);
@@ -193,8 +196,6 @@ public class CBRProject_View_JPanel extends JPanel {
 
 		pnl_amos.add(button_bar);
 		
-		tbp.addTab("AmosII", pnl_amos);
-
 		JComponent pnl_amos_1 = new Default_JPanel(BoxLayout.X_AXIS);
 		button_bar.add(pnl_amos_1);
 		//pnl_amos.add(pnl_amos_1);
@@ -213,47 +214,31 @@ public class CBRProject_View_JPanel extends JPanel {
 						textField1.setText("");
 					}
 					catch(Exception ex) {
-						CBRProject_View_JPanel.this.status_textarea.setText("Exception ::" + ex.getMessage());
+						CBRProject_View.this.status_textarea.setText("Exception ::" + ex.getMessage());
 					}
 				}
 			}
 		});
 		pnl_amos_1.add(textField1);
+		textField1.setMaximumSize(new Dimension(Integer.MAX_VALUE, Settings.JTextField_height));
 
+		// Amos Text area
 		Default_JPanel pnl_amos_2 = new Default_JPanel(BoxLayout.X_AXIS);
 		JScrollPane sp = new JScrollPane();
 		sp.setMinimumSize(new Dimension(1, 1));
 		sp.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
-
 		sp.setViewportView(status_textarea);
+		
 		status_textarea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		status_textarea.setEditable(false);
 		status_textarea.setText("");
 		status_textarea.setFont(Settings.font_normal);
 		pnl_amos_2.add(sp);
 		pnl_amos.add(pnl_amos_2);
+		
+		// Add tabbedpane
 		status_panel.add(tbp);
 		add(status_panel);
-		
-		
-		/* Console */
-		//JComponent con = new Default_JPanel(BoxLayout.Y_AXIS);
-		//tbp.addTab("Console", con);
-		//con.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		//JScrollPane scrollpane = new JScrollPane();
-		//JTextPane consolePane = new JTextPane();
-		
-		//MessageConsole mc = new MessageConsole(consolePane);
-		//mc.redirectErr(Color.RED, System.err);
-		
-		/*try {
-			double i = 1/0;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		
-		//scrollpane.setViewportView(consolePane);
-		//con.add(scrollpane);
 	}
 
 	public void amosDisconnect() {
