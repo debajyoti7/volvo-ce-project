@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import javax.swing.BoxLayout;
@@ -11,6 +12,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import core.CBRProject;
 import core.CBRControler;
+
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -21,7 +25,6 @@ import javax.swing.UIManager;
 import java.awt.Dimension;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -42,13 +45,13 @@ public class AwesomeCBR extends JFrame {
 	private CBRControler pm;
 	private List<CBRProject_View_JPanel> ppanels = new ArrayList<CBRProject_View_JPanel>();
 	private Boolean disable_listeners = false;
-	private JSplitPane splitPaneLR;
+	//private JSplitPane splitPaneLR;
 	private JScrollPane scrollPane;
 	private JPanel contentPane;
 	private JPanel panel_main;
-	private JPanel projects_area = new JPanel();
+	private JPanel projects_area = new Default_JPanel(BoxLayout.Y_AXIS);
 	private JList<String> list_projects;	
-	private JMenuItem f1, /*f2,*/ f3;
+	private JMenuItem f1, f3;
 	
 	// Actions.
 	public static void main(String[] args) {
@@ -114,28 +117,6 @@ public class AwesomeCBR extends JFrame {
 		});
 		file.add(f1);
 		
-		/*f2 = new JMenuItem("Edit...");
-		f2.setMnemonic('E');
-		f2.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent ae) {
-		    	String old_name = list_projects.getSelectedValue().toString();
-				int old_index = list_projects.getSelectedIndex();
-				CBRProject p = pm.getProjects().get(old_index);
-				JDialog_Project np = new JDialog_Project(JFrame_main.this, JFrame_main.this.pm.getProjectNames(), "AwesomeCBR - Edit project name", p);
-				np.setLocationRelativeTo(JFrame_main.this);
-				np.setVisible(true);
-
-				if(np.isValidated()) {					
-					p.setName(np.getProjectName());
-					p.setDataset(np.getURL());
-					pm.updateProject(old_name, p);
-					refreshView(pm.getProjectNames().indexOf(p.getName()));
-				}
-
-		    }
-		});
-		file.add(f2);*/
-		
 		f3 = new JMenuItem("Delete...");
 		f3.setMnemonic('D');
 		f3.addActionListener(new ActionListener() {
@@ -150,7 +131,6 @@ public class AwesomeCBR extends JFrame {
 		});
 		file.add(f3);
 		bar.add(file);
-		
 		
 		JMenu help = new JMenu("Help");
 		bar.add(help);
@@ -167,22 +147,20 @@ public class AwesomeCBR extends JFrame {
 			
 		setJMenuBar(bar);
 		
-		/*** Main area panel ***/
+		panel_main = new Default_JPanel(BoxLayout.X_AXIS);
+		//panel_main.setLayout(new BorderLayout(0,0));
 		
-		panel_main = new JPanel();
-		panel_main.setLayout(new BorderLayout(0,0));
-		
-		splitPaneLR = new JSplitPane();
-		
-		/*** Left side of Splitpane ***/
+		JComponent list_panel = new JPanel();
+		list_panel.setBackground(Color.WHITE);
+		list_panel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+		list_panel.setMinimumSize(new Dimension(300, Integer.MAX_VALUE));
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setMinimumSize(new Dimension(150, 1));
-		scrollPane.setMaximumSize(new Dimension(150, 32767));
-		scrollPane.setPreferredSize(new Dimension(150, 32767));
+		scrollPane.setMaximumSize(new Dimension(150, Integer.MAX_VALUE));
+		scrollPane.setPreferredSize(new Dimension(150, Integer.MAX_VALUE));
 		
 		list_projects = new JList<String>();
-		list_projects.setFont(Settings.font_normal);
 		list_projects.addListSelectionListener(new ListSelectionListener() {
 			// selection changed
 			public void valueChanged(ListSelectionEvent arg0) {
@@ -197,12 +175,22 @@ public class AwesomeCBR extends JFrame {
 			}
 		});
 		scrollPane.setViewportView(list_projects);
+		/*list_panel.add(list_projects);
+		list_panel.setMinimumSize(new Dimension(150, Integer.MAX_VALUE));
+		list_panel.setMaximumSize(new Dimension(150, Integer.MAX_VALUE));*/
+		//list_panel.setPreferredSize(new Dimension(150, Integer.MAX_VALUE));
 		
-		splitPaneLR.setLeftComponent(scrollPane);
-		splitPaneLR.setRightComponent(projects_area);
-		projects_area.setLayout(new BoxLayout(projects_area, BoxLayout.Y_AXIS));
+		//projects_area.setLayout(new BoxLayout(projects_area, BoxLayout.Y_AXIS));
 		
-		panel_main.add(splitPaneLR);
+		//JComponent jc = new Default_JPanel(BoxLayout.X_AXIS);
+		//jc.setBackground(Color.RED);
+		//jc.add(list_panel);
+		//jc.add(projects_area);
+		
+		panel_main.add(scrollPane);
+		panel_main.add(projects_area);
+		panel_main.setBackground(Color.BLUE);
+		
 		contentPane.add(panel_main);
 		
 		pm = new CBRControler();
@@ -226,8 +214,6 @@ public class AwesomeCBR extends JFrame {
 			list_projects.setSelectedIndex(selected_index);
 			ppanels.get(selected_index).setVisible(true);
 			
-			// Enable Project->Delete...
-			//f2.setEnabled(true);
 			f3.setEnabled(true);
 		}
 		else {
@@ -241,13 +227,7 @@ public class AwesomeCBR extends JFrame {
 			projects_area.revalidate();
 			projects_area.repaint();
 			
-			// Disable Project->Delete...
-			//f2.setEnabled(false);
 			f3.setEnabled(false);
-			
-			//for(Component comp : projects_area.getComponents()) {
-			//	projects_area.remove(comp);
-			//}
 		}
 	}
 }
