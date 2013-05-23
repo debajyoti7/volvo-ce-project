@@ -188,6 +188,8 @@ public class CBRProject_View extends JPanel {
 					textField1.setEnabled(false);
 
 					amosDisconnect();
+					
+					history_listModel.clear();
 				}
 			}
 		});
@@ -229,14 +231,10 @@ public class CBRProject_View extends JPanel {
 		sp.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
 		sp.setViewportView(status_textarea);
 		
-		//status_textarea.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
 		status_textarea.setEditable(false);
 		status_textarea.setText("");
 		status_textarea.setFont(Settings.font_normal);
 		pnl_amos_2.add(sp);
-		
-		//pnl_amos.add(button_bar);
-		//pnl_amos.add(pnl_amos_2);
 		
 		JComponent tp = new Default_JPanel(BoxLayout.Y_AXIS);
 		tp.setMinimumSize(new Dimension(0, 0));
@@ -244,8 +242,10 @@ public class CBRProject_View extends JPanel {
 		tp.add(pnl_amos_2);
 		pnl_amos.add(tp);
 		
-		//JComponent skata = new Default_JPanel(BoxLayout.X_AXIS);
 		JScrollPane history_sp = new JScrollPane();
+		history_sp.setMinimumSize(new Dimension(150, Integer.MAX_VALUE));
+		//history_sp.setMaximumSize(new Dimension(150, Integer.MAX_VALUE));
+		history_sp.setPreferredSize(new Dimension(150, 150));
 		history_sp.setViewportView(history);
 		history_sp.setBorder(BorderFactory.createTitledBorder("Cmd History"));
 		history_sp.setBackground(Color.WHITE);
@@ -255,7 +255,6 @@ public class CBRProject_View extends JPanel {
 		        @SuppressWarnings("rawtypes")
 				JList list = (JList)evt.getSource();
 		        if (evt.getClickCount() > 1) {
-		            //int index = list.locationToIndex(evt.getPoint());
 		        	if(list.getModel().getSize() > 0) {
 		        		status_textarea.append(list.getSelectedValue().toString()+"\n");
 		        		connector.execute(list.getSelectedValue().toString());
@@ -264,7 +263,8 @@ public class CBRProject_View extends JPanel {
 		    }
 		});
 		
-		pnl_amos.add(history_sp);
+		// Almost working history.
+		//pnl_amos.add(history_sp);
 		
 		status_panel.add(tbp);
 		add(status_panel);
