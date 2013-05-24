@@ -3,7 +3,7 @@ volvo-ce-project
 
 DVA409 with Volvo CE, Eskilstuna
 
-The Project group is a four member team consisting of students at Mälardalen University, Västerås under the supervision of Tomas Olsson.
+The Project group is a four member team consisting of students at Mï¿½lardalen University, Vï¿½sterï¿½s under the supervision of Tomas Olsson.
 The project members are :
 1. Ande Hana
 2. Konstantinos Konstantopoulos
@@ -11,9 +11,11 @@ The project members are :
 4. Tobias Larsen
 5. Debajyoti Nag
 
-The main objective of this project is to improve the existing CBR system by exploring new indexing techniques to have more exact results.
-1. Kernel Features :
-	a. Implement custom-metric 
-	b. Improve CBR indexing
-2. Accessibility features :
-	a. Implement a toolbox for the developed system
+The project aims at developing a system
+that will work in unison with AMOS II and help in
+monitoring and diagnosis of machines from the data
+collected on site by comparing it with test data used to
+train the system. The system implements a CBR that uses
+probabilistic density functions to classify incoming cases,
+and then allows the user to do a Nearest Neighbors
+Search on the case library.
