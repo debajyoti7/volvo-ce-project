@@ -1,11 +1,18 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
+import java.util.List;
+import java.util.Locale;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,6 +22,10 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
+
+import org.apache.commons.math3.ml.clustering.DoublePoint;
 
 import core.CBRProject;
 
@@ -24,7 +35,7 @@ public class KNNSearch_JFrame extends JFrame {
 	
 	public KNNSearch_JFrame() {}
 	
-	public void setVisible(final JFrame parent, final CBRProject project) {
+	public void setVisible(final JFrame parent, final CBRProject project, final JComponent plot) {
 		JPanel contentPane = new JPanel();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		setContentPane(contentPane);
@@ -41,7 +52,7 @@ public class KNNSearch_JFrame extends JFrame {
 		add(topPanel);
 		
 		//add(new JLabel(attributes.size()+""));
-		String[] attributes = project.getKernel().getAttributeNames();
+		String[] attributes = new String[] {"attr1", "attr2"}; //project.getKernel().getAttributeNames();
 		fields = new JPanel_LTControl[attributes.length];
 		for(int i = 0; i < attributes.length; i++) {
 			fields[i] = new JPanel_LTControl(attributes[i]+":");
@@ -64,7 +75,7 @@ public class KNNSearch_JFrame extends JFrame {
 				for(int i = 0; i < fields.length; i++) {
 					try {
 						fields[i].t.commitEdit();
-						values[i] = (double) fields[i].t.getValue();
+						values[i] = Double.parseDouble(fields[i].t.getValue().toString());
 					} catch (ParseException pe) {
 						JOptionPane.showMessageDialog(parent, "Couldn't parse all values :-(", "Illegal value format", JOptionPane.ERROR_MESSAGE);
 						return;
@@ -72,7 +83,11 @@ public class KNNSearch_JFrame extends JFrame {
 				}
 				try {
 					//JOptionPane.showMessageDialog(KNNSearch_JFrame.this, "To teh kernel!! " + Arrays.toString(values));
-					project.getKernel().kNNQuery((Integer)kSpinner.getValue(), values);
+					List<DoublePoint> result = project.getKernel().kNNQuery((Integer)kSpinner.getValue(), values);
+					if (plot instanceof ClassifierPanel) {
+						ClassifierPanel cp = (ClassifierPanel)plot;
+						cp.plot("kNN search", Color.ORANGE, result);
+					}
 					setVisible(false);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(parent, ex.toString(), "Exception occured?!", JOptionPane.ERROR_MESSAGE);
@@ -101,10 +116,14 @@ public class KNNSearch_JFrame extends JFrame {
 			l.setFont(Settings.font_normal);
 			add(l);
 			
-			t = new JFormattedTextField(0.0);
+			t = new JFormattedTextField();//(DecimalFormat) DecimalFormat.getNumberInstance());
+			t.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("0.0", new DecimalFormatSymbols(new Locale("us", "EN"))))));
+			//t.setLocale(Locale.US);
+			//t.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
 			t.setMinimumSize(new Dimension(250, Settings.JTextField_height));
 			t.setMaximumSize(new Dimension(32767, Settings.JTextField_height));
 			t.setPreferredSize(new Dimension(250, Settings.JTextField_height));
+			
 			add(t);
 		}
 	}

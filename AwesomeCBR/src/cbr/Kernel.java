@@ -1,23 +1,21 @@
 package cbr;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import mtree.MTree;
 
 import org.apache.commons.math3.ml.clustering.DBSCANClusterer;
 import org.apache.commons.math3.ml.clustering.DoublePoint;
-import org.xml.sax.SAXException;
-
-import xml.XmlData;
 
 /**
- * TODO Document me maddafakka!!!!
- * @author LordSpace
- *
+ * Implementation of the KernelIF. Refer to the constructors and the
+ * interface of how to use this class.
+ * 
+ * @see <a href="http://en.wikipedia.org/wiki/DBSCAN">DBSCAN on Wikipedia</a>
+ * @see <a href="http://en.wikipedia.org/wiki/M-tree">M-tree on Wikipedia</a>
  */
 public class Kernel implements KernelIF {
 	
@@ -32,18 +30,23 @@ public class Kernel implements KernelIF {
 	private final Map<Double, DoublePoint> dataPointsMap = new HashMap<>();
 	
 	/**
-	 *
-	 * @param dataFile The file containing the data points.
+	 * Creates random 2D data points of a given size, useful constructor for test purposes.
+	 * @param size number of random samples in the produced data
+	 * @param eps the radius for the DBSCAN neighbor search
+	 * @param minPts the minimum number of neighboring data points
+	 * 				 for the DBSCAN to create a cluster
 	 */
-
-	public Kernel(File dataFile, double eps, int minPts) throws IOException, ParserConfigurationException, SAXException {
-		this(populateFromXmlFile(dataFile, new HashSet<DoublePoint>()), eps, minPts);
-	}
-	
 	public Kernel(int size, double eps, int minPts) {
 		this(populateRandom(new HashSet<DoublePoint>(), 100), eps, minPts);
 	}
 	
+	/**
+	 * Creates a kernel from the given data points.
+	 * @param dataPoints 
+	 * @param eps the radius for the DBSCAN neighbor search
+	 * @param minPts the minimum number of neighboring data points
+	 * 				 for the DBSCAN to create a cluster
+	 */
 	public Kernel(Set<DoublePoint> dataPoints, double eps, int minPts) {
 		if (dataPoints.isEmpty())
 			throw new IllegalArgumentException("empty data set");
@@ -54,7 +57,6 @@ public class Kernel implements KernelIF {
 		
 		tree = new DoubleMTree();
 		
-		// TODO add the case probabilities for all data points
 		for (DoublePoint doublePoint : dataPoints) {
 			if (attributeNames == null) {
 				attributeNames = new String[doublePoint.getPoint().length];
@@ -83,7 +85,7 @@ public class Kernel implements KernelIF {
 	@Override
 	public List<DoublePoint> kNNQuery(int k, double... attributes) {
 		
-		System.out.println("kNN search on " + Arrays.toString(attributes));
+		//System.out.println("kNN search on " + Arrays.toString(attributes));
 		
 		// These steps are followed:
 		// Encapsulate the attributes array in a DoublePoint
@@ -102,21 +104,42 @@ public class Kernel implements KernelIF {
 				throw new RuntimeException("No mapping for " + item.data);
 			result.add(dp);
 		}
+				
+		try {
+			String fileName = new SimpleDateFormat("yyyyMMddhhmmss'_kNNQuery.csv'").format(new Date());
+			try (PrintWriter out = new PrintWriter(fileName)) {
+				out.println(trim(Arrays.toString(attributes)));
+				for (DoublePoint dp : result) {
+					out.println(trim(Arrays.toString(dp.getPoint())));
+				}
+			}
+			System.out.println("kNN search stored in file: " + new File(fileName).getCanonicalPath());
+		} catch (Exception e) {
+			System.err.println("Error writing to file");
+			e.printStackTrace();
+		}
 		
 		return result;
 	}
 	
-	private static Set<DoublePoint> populateFromXmlFile(File dataFile, Set<DoublePoint> dataPoints) throws ParserConfigurationException, SAXException, IOException{
-		XmlData xmlDataSet = new XmlData(dataFile);
-		
-		double[] dB1 = xmlDataSet.getSamples().get(0).getYValues();
-		double[] dB2 = xmlDataSet.getSamples().get(1).getYValues();
-		
-		for (int i = 0; i < dB1.length; i++) {
-			dataPoints.add(new DoublePoint(new double[]{dB1[i], dB2[i]}));
-		}
-		return dataPoints;
+	private static String trim(String s) {
+		if (s.length() < 2)
+			return s;
+		return s.substring(1, s.length() - 1);
 	}
+	
+//	private static Set<DoublePoint> populateFromXmlFile(File dataFile, Set<DoublePoint> dataPoints) throws ParserConfigurationException, SAXException, IOException{		
+//		System.out.println("Reading data from " + dataFile.getCanonicalPath());
+//		XmlData xmlDataSet = new XmlData(dataFile);
+//		
+//		double[] dB1 = xmlDataSet.getSamples().get(0).getYValues();
+//		double[] dB2 = xmlDataSet.getSamples().get(1).getYValues();
+//		
+//		for (int i = 0; i < dB1.length; i++) {
+//			dataPoints.add(new DoublePoint(new double[]{dB1[i], dB2[i]}));
+//		}
+//		return dataPoints;
+//	}
 	
 	private static Set<DoublePoint> populateRandom(Set<DoublePoint> dataPoints, int size) {
 		final Random RANDOM = new Random();

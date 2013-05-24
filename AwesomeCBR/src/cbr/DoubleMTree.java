@@ -6,9 +6,9 @@ import mtree.*;
 import mtree.utils.Pair;
 
 /**
- * TODO make appropriate updates to create the index structure by the probability values
+ * MTree for double values
  */
-public class DoubleMTree extends MTree<Double> {		
+class DoubleMTree extends MTree<Double> {		
 	
 	private static final DistanceFunction<Double> DISTANCE = new DistanceFunction<Double>() {
 		
@@ -46,7 +46,7 @@ public class DoubleMTree extends MTree<Double> {
 		return new Pair<Double>(min, max);
 	}
 	
-	public DoubleMTree() {
+	DoubleMTree() {
 		super(DISTANCE, new ComposedSplitFunction<Double>(DETERMINISTIC, new PartitionFunctions.BalancedPartition<Double>()));		
 	}
 }

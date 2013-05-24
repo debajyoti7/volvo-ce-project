@@ -89,7 +89,7 @@ public class XmlData {
 	private Map<Program, String> program;
 	private Map<Run, String> run;	
 	private List<Sample> samples = new ArrayList<>();	
-
+	
 	public XmlData(File file) throws IOException, ParserConfigurationException, SAXException {
 		
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -101,11 +101,11 @@ public class XmlData {
         
         populate(doc.getChildNodes());
         
-        System.out.println(datalog);
-        System.out.println(program);
-        System.out.println(run);
-        for (Sample sample : samples)
-        	System.out.println(sample.toString());
+//        System.out.println(datalog);
+//        System.out.println(program);
+//        System.out.println(run);
+//        for (Sample sample : samples)
+//        	System.out.println(sample.toString());
 	}
 	
 	public Map<Datalog, String> getDatalogAttributes() { return datalog; }

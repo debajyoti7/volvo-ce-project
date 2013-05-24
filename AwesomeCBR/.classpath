@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="mtree/tests/MTreeTest.java|gui/JPanel_LTControl.java|core/TextAreaOutputStream.java" kind="src" path="src">
+	<classpathentry excluding="mtree/tests/MTreeTest.java|gui/JPanel_LTControl.java|core/TextAreaOutputStream.java|cbr/package-info.java" kind="src" path="src">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/volvo/volvo-ce-project/AwesomeCBR/amos2/bin"/>
 		</attributes>
